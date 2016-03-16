@@ -1,12 +1,10 @@
-package com.wmj;
+package com.wmj.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.wmj.stages.GameStage;
 
-/**
- * Created by vostan on 02.03.16.
- */
 public class GameScreen implements Screen {
 
     private GameStage stage;

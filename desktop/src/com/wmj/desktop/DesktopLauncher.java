@@ -2,7 +2,7 @@ package com.wmj.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.wmj.Constants;
+import com.wmj.utils.Constants;
 import com.wmj.ZdzichuRuns;
 
 public class DesktopLauncher {

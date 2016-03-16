@@ -1,14 +1,12 @@
-package com.wmj;
+package com.wmj.stages;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.wmj.utils.WorldUtils;
 
-/**
- * Created by vostan on 02.03.16.
- */
 public class GameStage extends Stage {
     private static final int VIEWPORT_WIDTH = 20;
     private static final int VIEWPORT_HEIGHT = 13;

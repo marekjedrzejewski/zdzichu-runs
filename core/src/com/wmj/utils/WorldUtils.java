@@ -1,14 +1,12 @@
-package com.wmj;
+package com.wmj.utils;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.wmj.utils.Constants;
 
-/**
- * Created by vostan on 02.03.16.
- */
 public class WorldUtils {
 
     public static World createWorld(){
