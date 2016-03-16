@@ -16,6 +16,12 @@ public class RunnerUserData extends UserData {
         userDataType = UserDataType.RUNNER;
     }
 
+    public RunnerUserData(float width, float height) {
+        super(width, height);
+        jumpingLinearImpulse = Constants.RUNNER_JUMPING_LINEAR_IMPULSE;
+        userDataType = UserDataType.RUNNER;
+    }
+
     public Vector2 getJumpingLinearImpulse() {
         return jumpingLinearImpulse;
     }
@@ -35,6 +41,10 @@ public class RunnerUserData extends UserData {
 
     public Vector2 getDodgePosition() {
         return dodgePosition;
+    }
+
+    public float getHitAngularImpulse() {
+        return Constants.RUNNER_HIT_ANGULAR_IMPULSE;
     }
 
 }
