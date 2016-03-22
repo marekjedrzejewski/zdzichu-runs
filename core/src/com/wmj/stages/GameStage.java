@@ -34,8 +34,8 @@ public class GameStage extends Stage implements ContactListener {
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
 
-    private Rectangle screenLeftSide;
-    private Rectangle screenRightSide;
+    private Rectangle screenTopSide;
+    private Rectangle screenBottomSide;
 
     private Vector3 touchPoint;
 
@@ -72,9 +72,10 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setupTouchControlAreas() {
         touchPoint = new Vector3();
-        screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
-        screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
-                getCamera().viewportHeight);
+        screenTopSide = new Rectangle(0, getCamera().viewportHeight / 2,
+                getCamera().viewportWidth, getCamera().viewportHeight / 2);
+        screenBottomSide = new Rectangle(0, 0,
+                getCamera().viewportWidth, getCamera().viewportHeight / 2);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -88,7 +89,6 @@ public class GameStage extends Stage implements ContactListener {
         for (Body body : bodies) {
             update(body);
         }
-
 
         // Fixed timestep
         accumulator += delta;
@@ -127,9 +127,9 @@ public class GameStage extends Stage implements ContactListener {
         // Need to get the actual coordinates
         translateScreenToWorldCoordinates(x, y);
 
-        if (rightSideTouched(touchPoint.x, touchPoint.y)) {
+        if (topSideTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
-        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
+        } else if (bottomSideTouched(touchPoint.x, touchPoint.y)) {
             runner.dodge();
         }
 
@@ -145,12 +145,12 @@ public class GameStage extends Stage implements ContactListener {
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
-    private boolean leftSideTouched(float x, float y) {
-        return screenLeftSide.contains(x, y);
+    private boolean topSideTouched(float x, float y) {
+        return screenTopSide.contains(x, y);
     }
 
-    private boolean rightSideTouched(float x, float y) {
-        return screenRightSide.contains(x, y);
+    private boolean bottomSideTouched(float x, float y) {
+        return screenBottomSide.contains(x, y);
     }
 
     private void translateScreenToWorldCoordinates(int x, int y) {
