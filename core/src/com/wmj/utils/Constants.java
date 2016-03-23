@@ -6,13 +6,14 @@ public interface Constants {
 
     int APP_WIDTH = 800;
     int APP_HEIGHT = 480;
+    float WORLD_TO_SCREEN = 32;
 
     Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 
     float GROUND_X = 0;
     float GROUND_Y = 0;
     float GROUND_WIDTH = 50f;
-    float GROUND_HEIGHT = 2f;
+    float GROUND_HEIGHT = 1.4f;
     float GROUND_DENSITY = 0f;
 
     float RUNNER_X = 2;
@@ -32,4 +33,8 @@ public interface Constants {
     float RUNNING_LONG_ENEMY_Y = 2f;
     float FLYING_ENEMY_Y = 3f;
     Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
+
+    String BACKGROUND_IMAGE_PATH = "backdrops/notebook_800x480.jpg";
+
+
 }

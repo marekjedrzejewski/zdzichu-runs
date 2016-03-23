@@ -1,5 +1,12 @@
 package com.wmj.actors;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.wmj.box2d.RunnerUserData;
 
@@ -9,8 +16,35 @@ public class Runner extends GameActor {
     private boolean dodging;
     private boolean hit;
 
+    private static final int FRAMES = 25;
+    private static final int FRAME_W = 106;
+    private static final int FRAME_H = 128;
+    Animation runAnim;
+    Texture runSheet;
+    TextureRegion[] runFrames;
+    TextureRegion currentFrame;
+    SpriteBatch spriteBatch;
+    float stateTime;
+
+
     public Runner(Body body) {
         super(body);
+
+        runSheet = new Texture(Gdx.files.internal("animation_sheets/run_sheet_128.png"));
+        runFrames = new TextureRegion[FRAMES];
+        for (int i = 0; i < FRAMES; i++) {
+            runFrames[i] = new TextureRegion(runSheet, i*FRAME_W, 0, FRAME_W, FRAME_H);
+        }
+        runAnim = new Animation(0.033f, runFrames);
+        stateTime = 0f;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = runAnim.getKeyFrame(stateTime, true);
+        batch.draw(currentFrame, 50, 50);
     }
 
     @Override
