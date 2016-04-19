@@ -19,13 +19,12 @@ public class Runner extends GameActor {
     private static final int FRAMES = 25;
     private static final int FRAME_W = 106;
     private static final int FRAME_H = 128;
+
     Animation runAnim;
     Texture runSheet;
     TextureRegion[] runFrames;
     TextureRegion currentFrame;
-    SpriteBatch spriteBatch;
     float stateTime;
-
 
     public Runner(Body body) {
         super(body);
@@ -42,9 +41,17 @@ public class Runner extends GameActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = runAnim.getKeyFrame(stateTime, true);
-        batch.draw(currentFrame, 50, 50);
+
+        float x = screenRectangle.x - (screenRectangle.width * 0.1f);
+        float y = screenRectangle.y;
+
+        if(jumping){
+            batch.draw(currentFrame, x, y);
+        }else{
+            stateTime += Gdx.graphics.getDeltaTime();
+            currentFrame = runAnim.getKeyFrame(stateTime, true);
+            batch.draw(currentFrame, x, y);
+        }
     }
 
     @Override

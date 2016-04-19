@@ -36,6 +36,7 @@ public class GameStage extends Stage implements ContactListener {
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
+//    private Box2DDebugRenderer renderer;
 
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
@@ -48,6 +49,7 @@ public class GameStage extends Stage implements ContactListener {
         setUpWorld();
         setupCamera();
         setupTouchControlAreas();
+//        renderer = new Box2DDebugRenderer();
     }
 
     private void setUpWorld() {
@@ -56,7 +58,7 @@ public class GameStage extends Stage implements ContactListener {
         setUpBackground();
         setUpGround();
         setUpRunner();
-        createEnemy();
+//        createEnemy();
     }
 
     private void setUpBackground(){
