@@ -14,11 +14,6 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
         //Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -28,9 +23,18 @@ public class GameScreen implements Screen {
         stage.act(delta);
     }
 
-
     @Override
     public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void hide() {
 
     }
 
@@ -41,11 +45,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
 
     }
 

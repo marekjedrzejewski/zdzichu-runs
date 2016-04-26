@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.wmj.box2d.EnemyUserData;
+import com.wmj.enums.GameState;
 
 public class Enemy extends GameActor {
 
@@ -45,6 +46,10 @@ public class Enemy extends GameActor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        //super.draw(batch, parentAlpha);
+        //if (gameState == GameState.RUNNING) {
+            stateTime += Gdx.graphics.getDeltaTime();
+        //}
 //        stateTime += Gdx.graphics.getDeltaTime();           // #15
 //        currentFrame = carAnimation.getKeyFrame(stateTime, true);  // #16
         batch.draw(carSheet, 50, 50);

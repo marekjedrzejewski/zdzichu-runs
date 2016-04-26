@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
@@ -19,11 +20,19 @@ import com.wmj.actors.Background;
 import com.wmj.actors.Enemy;
 import com.wmj.actors.Ground;
 import com.wmj.actors.Runner;
+import com.wmj.actors.menu.PauseButton;
+import com.wmj.enums.GameState;
 import com.wmj.utils.BodyUtils;
 import com.wmj.utils.Constants;
 import com.wmj.utils.WorldUtils;
 
+import java.util.ArrayList;
+
 public class GameStage extends Stage implements ContactListener {
+
+    public interface GameListener {
+        void onGameStateChange(GameState newState);
+    }
 
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
@@ -38,18 +47,38 @@ public class GameStage extends Stage implements ContactListener {
     private OrthographicCamera camera;
 //    private Box2DDebugRenderer renderer;
 
+    private PauseButton pauseButton;
+
+    private ArrayList<GameListener> listeners;
+
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
 
     private Vector3 touchPoint;
+
+    private boolean paused;
 
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
         setupCamera();
+        setupMenu();
         setupTouchControlAreas();
+        Gdx.input.setInputProcessor(this);
 //        renderer = new Box2DDebugRenderer();
+        //onGameOver();
+    }
+
+    private void setupMenu() {
+        setupPause();
+    }
+
+    private void setupPause() {
+        Rectangle pauseButtonBounds = new Rectangle(getCamera().viewportWidth / 64, getCamera().viewportHeight * 11 / 20,
+                getCamera().viewportHeight / 10, getCamera().viewportHeight / 10);
+        pauseButton = new PauseButton(pauseButtonBounds, new GamePauseButtonListener());
+        addActor(pauseButton);
     }
 
     private void setUpWorld() {
@@ -61,7 +90,7 @@ public class GameStage extends Stage implements ContactListener {
 //        createEnemy();
     }
 
-    private void setUpBackground(){
+    private void setUpBackground() {
         addActor(new Background());
     }
 
@@ -87,12 +116,13 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportWidth, getCamera().viewportHeight / 2);
         screenBottomSide = new Rectangle(0, 0,
                 getCamera().viewportWidth, getCamera().viewportHeight / 2);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (paused) return;
 
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
@@ -132,6 +162,10 @@ public class GameStage extends Stage implements ContactListener {
         // Need to get the actual coordinates
         translateScreenToWorldCoordinates(x, y);
 
+        if (menuControlTouched(touchPoint.x, touchPoint.y)) {
+            return super.touchDown(x, y, pointer, button);
+        }
+
         if (topSideTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
         } else if (bottomSideTouched(touchPoint.x, touchPoint.y)) {
@@ -148,6 +182,10 @@ public class GameStage extends Stage implements ContactListener {
         }
 
         return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    private boolean menuControlTouched(float x, float y) {
+        return pauseButton.getBounds().contains(x, y);
     }
 
     private boolean topSideTouched(float x, float y) {
@@ -189,6 +227,42 @@ public class GameStage extends Stage implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    private class GamePauseButtonListener implements PauseButton.PauseButtonListener {
+
+        @Override
+        public void onPause() {
+            paused = true;
+            onGamePaused();
+        }
+
+        @Override
+        public void onResume() {
+            paused = false;
+            onGameResumed();
+        }
+
+    }
+
+    private void onGamePaused() {
+        notifyState(GameState.PAUSED);
+    }
+
+    private void onGameResumed() {
+        notifyState(GameState.RUNNING);
+    }
+
+    private void onGameOver() {
+        notifyState(GameState.OVER);
+    }
+
+    private void notifyState(GameState state) {
+        for (Actor actor : getActors()) {
+            if (actor instanceof GameListener) {
+                ((GameListener) actor).onGameStateChange(state);
+            }
+        }
     }
 
 }

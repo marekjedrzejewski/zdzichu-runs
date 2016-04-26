@@ -13,7 +13,7 @@ import com.wmj.utils.Constants;
 
 public class WorldUtils {
 
-    public static World createWorld(){
+    public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
 
@@ -31,7 +31,7 @@ public class WorldUtils {
         return body;
     }
 
-    public static Body createRunner(World world){
+    public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
@@ -61,7 +61,7 @@ public class WorldUtils {
         Body body = world.createBody(bodyDef);
         body.createFixture(shape, enemyType.getDensity());
         body.resetMassData();
-        EnemyUserData userData = new EnemyUserData(enemyType.getWidth(), enemyType.getHeight());
+        EnemyUserData userData = new EnemyUserData(enemyType.getWidth(), enemyType.getHeight(), enemyType.getRegions());
         body.setUserData(userData);
         shape.dispose();
 

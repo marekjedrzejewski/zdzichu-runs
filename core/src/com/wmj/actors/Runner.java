@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.wmj.box2d.RunnerUserData;
+import com.wmj.enums.GameState;
 
 public class Runner extends GameActor {
 
@@ -48,7 +49,9 @@ public class Runner extends GameActor {
         if(jumping){
             batch.draw(currentFrame, x, y);
         }else{
-            stateTime += Gdx.graphics.getDeltaTime();
+            //if (gameState == GameState.RUNNING) {
+                stateTime += Gdx.graphics.getDeltaTime();
+            //}
             currentFrame = runAnim.getKeyFrame(stateTime, true);
             batch.draw(currentFrame, x, y);
         }
@@ -82,7 +85,8 @@ public class Runner extends GameActor {
 
         if (!hit) {
             body.setTransform(getUserData().getRunningPosition(), 0f);
-        }     }
+        }
+    }
 
     public boolean isDodging() {
         return dodging;
