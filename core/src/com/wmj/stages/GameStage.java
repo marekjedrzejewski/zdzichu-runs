@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -169,7 +168,7 @@ public class GameStage extends Stage implements ContactListener {
         if (topSideTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
         } else if (bottomSideTouched(touchPoint.x, touchPoint.y)) {
-            runner.dodge();
+            runner.slide();
         }
 
         return super.touchDown(x, y, pointer, button);
@@ -177,8 +176,8 @@ public class GameStage extends Stage implements ContactListener {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (runner.isDodging()) {
-            runner.stopDodge();
+        if (runner.isSliding()) {
+            runner.stopSlide();
         }
 
         return super.touchUp(screenX, screenY, pointer, button);

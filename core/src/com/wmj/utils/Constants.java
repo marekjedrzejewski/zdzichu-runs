@@ -8,7 +8,7 @@ public interface Constants {
     int APP_HEIGHT = 480;
     float WORLD_TO_SCREEN = 32;
 
-    Vector2 WORLD_GRAVITY = new Vector2(0, -10);
+    Vector2 WORLD_GRAVITY = new Vector2(0, -8);
 
     float GROUND_X = 0;
     float GROUND_Y = 0;
@@ -24,7 +24,7 @@ public interface Constants {
     float RUNNER_DENSITY = 0.5f;
     float RUNNER_DODGE_X = 2f;
     float RUNNER_DODGE_Y = 1.5f;
-    Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
+    Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 11f);
     float RUNNER_HIT_ANGULAR_IMPULSE = 10f;
 
     float ENEMY_X = 25f;

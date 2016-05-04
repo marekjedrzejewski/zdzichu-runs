@@ -17,26 +17,42 @@ public class Runner extends GameActor {
     private boolean dodging;
     private boolean hit;
 
-    private static final int FRAMES = 25;
-    private static final int FRAME_W = 106;
-    private static final int FRAME_H = 128;
+    private static final float TIME_PER_FRAME = 0.033f;
 
-    Animation runAnim;
-    Texture runSheet;
-    TextureRegion[] runFrames;
+    private static final int RUN_FRAMES = 25;
+    private static final int RUN_FRAME_W = 106;
+    private static final int RUN_FRAME_H = 128;
+
+    private static final int JUMP_FRAMES = 31;
+    private static final int JUMP_FRAME_W = 66;
+    private static final int JUMP_FRAME_H = 128;
+
+    private static final int SLIDE_FRAMES = 15;
+    private static final int SLIDE_FRAME_W = 128;
+    private static final int SLIDE_FRAME_H = 32;
+
+    Animation runAnim, jumpAnim, slideAnim;
     TextureRegion currentFrame;
     float stateTime;
 
     public Runner(Body body) {
         super(body);
 
-        runSheet = new Texture(Gdx.files.internal("animation_sheets/run_sheet_128.png"));
-        runFrames = new TextureRegion[FRAMES];
-        for (int i = 0; i < FRAMES; i++) {
-            runFrames[i] = new TextureRegion(runSheet, i*FRAME_W, 0, FRAME_W, FRAME_H);
-        }
-        runAnim = new Animation(0.033f, runFrames);
+        runAnim = loadAnimation("run_sheet_128.png", RUN_FRAMES, RUN_FRAME_W, RUN_FRAME_H);
+        jumpAnim = loadAnimation("jump_sheet_128.png", JUMP_FRAMES, JUMP_FRAME_W, JUMP_FRAME_H);
+        slideAnim = loadAnimation("slide_sheet_32.png", SLIDE_FRAMES, SLIDE_FRAME_W, SLIDE_FRAME_H);
+
         stateTime = 0f;
+    }
+
+    private Animation loadAnimation(String filename, int frames, int frame_w, int frame_h) {
+        Texture animSheet = new Texture(Gdx.files.internal("animation_sheets/" + filename));
+        TextureRegion[] runFrames = new TextureRegion[frames];
+        for (int i = 0; i < frames ; i++) {
+            runFrames[i] = new TextureRegion(animSheet, i*frame_w, 0, frame_w, frame_h);
+        }
+        return new Animation(TIME_PER_FRAME, runFrames);
+
     }
 
     @Override
@@ -46,12 +62,15 @@ public class Runner extends GameActor {
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
 
+        stateTime += Gdx.graphics.getDeltaTime();
+
         if(jumping){
+            currentFrame = jumpAnim.getKeyFrame(stateTime, false);
             batch.draw(currentFrame, x, y);
-        }else{
-            //if (gameState == GameState.RUNNING) {
-                stateTime += Gdx.graphics.getDeltaTime();
-            //}
+        } else if (dodging) {
+            currentFrame = slideAnim.getKeyFrame(stateTime, true);
+            batch.draw(currentFrame, x, y);
+        } else {
             currentFrame = runAnim.getKeyFrame(stateTime, true);
             batch.draw(currentFrame, x, y);
         }
@@ -64,6 +83,7 @@ public class Runner extends GameActor {
 
     public void jump() {
         if (!(jumping || dodging || hit)) {
+            stateTime = 0;
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
         }
@@ -73,14 +93,14 @@ public class Runner extends GameActor {
         jumping = false;
     }
 
-    public void dodge() {
+    public void slide() {
         if (!(jumping || hit)) {
             body.setTransform(getUserData().getDodgePosition(), getUserData().getDodgeAngle());
             dodging = true;
         }
     }
 
-    public void stopDodge() {
+    public void stopSlide() {
         dodging = false;
 
         if (!hit) {
@@ -88,7 +108,7 @@ public class Runner extends GameActor {
         }
     }
 
-    public boolean isDodging() {
+    public boolean isSliding() {
         return dodging;
     }
 
