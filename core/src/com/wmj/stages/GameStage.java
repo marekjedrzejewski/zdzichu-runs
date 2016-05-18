@@ -74,8 +74,11 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setupPause() {
-        Rectangle pauseButtonBounds = new Rectangle(getCamera().viewportWidth / 64, getCamera().viewportHeight * 11 / 20,
-                getCamera().viewportHeight / 10, getCamera().viewportHeight / 10);
+        Rectangle pauseButtonBounds = new Rectangle(
+                getCamera().viewportWidth / 40,
+                getCamera().viewportHeight * 17 / 20,
+                getCamera().viewportHeight / 10,
+                getCamera().viewportHeight / 10);
         pauseButton = new PauseButton(pauseButtonBounds, new GamePauseButtonListener());
         addActor(pauseButton);
     }

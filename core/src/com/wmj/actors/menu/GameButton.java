@@ -13,14 +13,13 @@ public abstract class GameButton extends Button {
     protected Rectangle bounds;
     private Skin skin;
 
-
     public GameButton(Rectangle bounds) {
         this.bounds = bounds;
         setWidth(bounds.width);
         setHeight(bounds.height);
         setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
         skin = new Skin();
-        //skin.addRegions(new TextureAtlas(Constants.SPRITES_ATLAS_PATH));
+        skin.addRegions(new TextureAtlas(Constants.SPRITES_ATLAS_PATH));
         loadTextureRegion();
         addListener(new ClickListener() {
             @Override
@@ -34,7 +33,7 @@ public abstract class GameButton extends Button {
 
     protected void loadTextureRegion() {
         ButtonStyle style = new Button.ButtonStyle();
-        //style.up = skin.getDrawable(getRegionName());
+        style.up = skin.getDrawable(getRegionName());
         setStyle(style);
     }
 

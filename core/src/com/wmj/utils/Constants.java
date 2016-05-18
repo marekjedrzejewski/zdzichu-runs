@@ -35,6 +35,7 @@ public interface Constants {
     Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
 
     String BACKGROUND_IMAGE_PATH = "backdrops/notebook_800x480.jpg";
+    String SPRITES_ATLAS_PATH = "sprites.txt";
 
     String[] RUNNING_SMALL_ENEMY_REGION_NAMES = new String[] {"ladyBug_walk1", "ladyBug_walk2"};
     String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[] {"barnacle_bite1", "barnacle_bite2"};

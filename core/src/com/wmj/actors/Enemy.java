@@ -47,9 +47,10 @@ public class Enemy extends GameActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //super.draw(batch, parentAlpha);
-        //if (gameState == GameState.RUNNING) {
+
+        if (gameState == GameState.RUNNING) {
             stateTime += Gdx.graphics.getDeltaTime();
-        //}
+        }
 //        stateTime += Gdx.graphics.getDeltaTime();           // #15
 //        currentFrame = carAnimation.getKeyFrame(stateTime, true);  // #16
         batch.draw(carSheet, 50, 50);

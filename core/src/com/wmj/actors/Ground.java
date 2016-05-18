@@ -19,9 +19,9 @@ public class Ground extends GameActor {
     public void act(float delta) {
         super.act(delta);
 
-//        if (gameState == GameState.PAUSED) {
-//            return;
-//        }
+        if (gameState == GameState.PAUSED) {
+            return;
+        }
     }
 
 }

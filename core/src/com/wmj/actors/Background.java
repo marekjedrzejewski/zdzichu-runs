@@ -27,7 +27,7 @@ public class Background extends Actor implements GameStage.GameListener {
     @Override
     public void act(float delta) {
 
-        if (gameState == GameState.PAUSED) {
+        if (gameState != GameState.RUNNING) {
             return;
         }
 
