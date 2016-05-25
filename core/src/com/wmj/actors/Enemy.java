@@ -7,53 +7,52 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.wmj.box2d.EnemyUserData;
+import com.wmj.box2d.UserData;
 import com.wmj.enums.GameState;
+import com.wmj.utils.AnimParameters;
+import com.wmj.utils.Constants;
 
 public class Enemy extends GameActor {
 
-    private static final int FRAMES = 15;
-    private static final int FRAME_W = 212;
-    private static final int FRAME_H = 96;
+    private static final float TIME_PER_FRAME = 0.033f;
 
-
-
-    Animation carAnimation;
-    Texture carSheet;
-    TextureRegion[] carFrames;
-    SpriteBatch spriteBatch;
+    Animation enemyAnim;
     TextureRegion currentFrame;
 
     float stateTime;
 
     public Enemy(Body body) {
         super(body);
-        carSheet = new Texture(Gdx.files.internal("animation_sheets/ground.png"));
 
+        EnemyUserData enemyData = (EnemyUserData) body.getUserData();
+        AnimParameters animParameters= enemyData.getAnimParameters();
+        enemyAnim = loadAnimation(animParameters.getPath(), animParameters.getFrames(),
+                animParameters.getFrames_w(), animParameters.getFrames_h());
+        stateTime = 0f;
+    }
 
-//        carFrames = new TextureRegion[FRAMES];
-//        for (int i = 0, row = 0; i < FRAMES; i++) {
-//            //ToDo:for two lines
-//            if(i*FRAME_W > carSheet.getWidth()){
-//                row++;
-//            }
-//            carFrames[i] = new TextureRegion(carSheet, i*FRAME_W, row, FRAME_W, FRAME_H);
-//        }
-//        carAnimation = new Animation(0.033f, carFrames);
-//        stateTime = 0f;
+    private Animation loadAnimation(String filename, int frames, int frame_w, int frame_h) {
+        Texture animSheet = new Texture(Gdx.files.internal("animation_sheets/" + filename));
+        TextureRegion[] runFrames = new TextureRegion[frames];
+        for (int i = 0; i < frames ; i++) {
+            runFrames[i] = new TextureRegion(animSheet, i*frame_w, 0, frame_w, frame_h);
+        }
+        return new Animation(TIME_PER_FRAME, runFrames);
     }
 
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        //super.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
 
-        if (gameState == GameState.RUNNING) {
-            stateTime += Gdx.graphics.getDeltaTime();
-        }
-//        stateTime += Gdx.graphics.getDeltaTime();           // #15
-//        currentFrame = carAnimation.getKeyFrame(stateTime, true);  // #16
-        batch.draw(carSheet, 50, 50);
+        float x = screenRectangle.x - (screenRectangle.width * 0.1f);
+        float y = screenRectangle.y;
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = enemyAnim.getKeyFrame(stateTime, true);
+        batch.draw(currentFrame, x, y);
     }
 
     @Override
