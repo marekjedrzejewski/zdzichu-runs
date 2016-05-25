@@ -3,13 +3,16 @@ package com.wmj.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.wmj.ZdzichuRuns;
 import com.wmj.stages.GameStage;
 
 public class GameScreen implements Screen {
 
     private GameStage stage;
+    private ZdzichuRuns game;
 
-    public GameScreen() {
+    public GameScreen(ZdzichuRuns game) {
+        this.game = game;
         stage = new GameStage();
     }
 

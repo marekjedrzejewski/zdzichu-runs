@@ -65,6 +65,8 @@ public class GameStage extends Stage implements ContactListener {
         setupMenu();
         setupTouchControlAreas();
         Gdx.input.setInputProcessor(this);
+        //onGameResumed();
+        //onGamePaused();
 //        renderer = new Box2DDebugRenderer();
         //onGameOver();
     }

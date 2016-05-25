@@ -23,6 +23,10 @@ public class PauseButton extends GameButton implements GameStage.GameListener {
 
     @Override
     protected String getRegionName() {
+        if (gameState == null) {
+            gameState = GameState.PAUSED;
+        }
+
         return gameState == GameState.PAUSED ? Constants.PLAY_REGION_NAME : Constants.PAUSE_REGION_NAME;
     }
 
