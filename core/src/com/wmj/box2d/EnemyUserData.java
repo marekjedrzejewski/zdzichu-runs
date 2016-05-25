@@ -2,18 +2,19 @@ package com.wmj.box2d;
 
 import com.badlogic.gdx.math.Vector2;
 import com.wmj.enums.UserDataType;
+import com.wmj.utils.AnimParameters;
 import com.wmj.utils.Constants;
 
 public class EnemyUserData extends UserData {
 
     private Vector2 linearVelocity;
-    private String[] textureRegions;
+    private AnimParameters animParameters;
 
-    public EnemyUserData(float width, float height, String[] textureRegions) {
+    public EnemyUserData(float width, float height, AnimParameters animParameters) {
         super(width, height);
         userDataType = UserDataType.ENEMY;
         linearVelocity = Constants.ENEMY_LINEAR_VELOCITY;
-        this.textureRegions = textureRegions;
+        this.animParameters = animParameters;
     }
 
     public void setLinearVelocity(Vector2 linearVelocity) {
@@ -24,8 +25,8 @@ public class EnemyUserData extends UserData {
         return linearVelocity;
     }
 
-    public String[] getTextureRegions() {
-        return textureRegions;
+    public AnimParameters getAnimParameters() {
+        return animParameters;
     }
 
 }

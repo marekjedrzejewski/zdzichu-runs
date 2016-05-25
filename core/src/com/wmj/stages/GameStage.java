@@ -89,7 +89,7 @@ public class GameStage extends Stage implements ContactListener {
         setUpBackground();
         setUpGround();
         setUpRunner();
-//        createEnemy();
+        createEnemy();
     }
 
     private void setUpBackground() {

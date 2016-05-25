@@ -31,7 +31,6 @@ public class RunnerUserData extends UserData {
     }
 
     public float getDodgeAngle() {
-        // In radians
         return (float) (-90f * (Math.PI / 180f));
     }
 
