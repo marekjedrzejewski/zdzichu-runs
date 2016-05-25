@@ -122,6 +122,7 @@ public class Runner extends GameActor {
     }
 
     public void hit() {
+
         body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
         hit = true;
     }

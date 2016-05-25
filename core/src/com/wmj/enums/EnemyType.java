@@ -1,36 +1,41 @@
 package com.wmj.enums;
 
 import com.wmj.utils.Constants;
+import com.wmj.utils.AnimParameters;
 
 public enum EnemyType {
 
-    RUNNING_SMALL(1f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.RUNNING_SMALL_ENEMY_REGION_NAMES),
-    RUNNING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.RUNNING_WIDE_ENEMY_REGION_NAMES),
-    RUNNING_LONG(1f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.RUNNING_LONG_ENEMY_REGION_NAMES),
-    RUNNING_BIG(2f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.RUNNING_BIG_ENEMY_REGION_NAMES),
+//    //Smietnik, Pies, Kaktus
+//    RUNNING_SMALL(1f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
+//            Constants.RUNNING_SMALL_ENEMY_REGION_NAMES),
+//    //Kaktus
+//    RUNNING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
+//            Constants.RUNNING_WIDE_ENEMY_REGION_NAMES),
+//    //Kaktus
+//    RUNNING_LONG(1f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
+//            Constants.RUNNING_LONG_ENEMY_REGION_NAMES),
+//    //Maluch
+    RUNNING_BIG(3f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
+            Constants.MALUCH_ANIM),
+    //Jastrzab
     FLYING_SMALL(1f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.FLYING_SMALL_ENEMY_REGION_NAMES),
-    FLYING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.FLYING_WIDE_ENEMY_REGION_NAMES);
+            Constants.JASTRZAB_ANIM);
 
     private float width;
     private float height;
     private float x;
     private float y;
     private float density;
-    private String[] regions;
+    private AnimParameters animParameters;
 
-    EnemyType(float width, float height, float x, float y, float density, String[] regions) {
+    EnemyType(float width, float height, float x, float y, float density,
+              AnimParameters animParameters) {
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
         this.density = density;
-        this.regions = regions;
+        this.animParameters = animParameters;
     }
 
     public float getWidth() {
@@ -53,8 +58,8 @@ public enum EnemyType {
         return density;
     }
 
-    public String[] getRegions() {
-        return regions;
+    public AnimParameters getAnimParameters() {
+        return animParameters;
     }
 
 }
