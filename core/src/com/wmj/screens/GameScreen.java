@@ -8,8 +8,8 @@ import com.wmj.stages.GameStage;
 
 public class GameScreen implements Screen {
 
-    private GameStage stage;
     private ZdzichuRuns game;
+    private GameStage stage;
 
     public GameScreen(ZdzichuRuns game) {
         this.game = game;

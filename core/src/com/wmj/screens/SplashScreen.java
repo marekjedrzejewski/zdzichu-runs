@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.wmj.ZdzichuRuns;
-import com.wmj.utils.Constants;
 
 public class SplashScreen implements Screen {
+
+    private ZdzichuRuns game;
     private Texture logo;
     private SpriteBatch spriteBatch;
-    private ZdzichuRuns game;
     private long startTime;
 
     public static int WIDTH;
@@ -35,8 +35,11 @@ public class SplashScreen implements Screen {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        WIDTH = Gdx.graphics.getWidth();
+        HEIGHT = Gdx.graphics.getHeight();
+
         spriteBatch.begin();
-        spriteBatch.draw(logo, 0, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        spriteBatch.draw(logo, 0, 0, WIDTH, HEIGHT);
         spriteBatch.end();
 
         if (TimeUtils.millis() > (startTime + 2000)) {
@@ -75,4 +78,5 @@ public class SplashScreen implements Screen {
         logo.dispose();
         spriteBatch.dispose();
     }
+
 }
