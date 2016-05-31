@@ -7,16 +7,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.wmj.enums.GameState;
-import com.wmj.stages.GameStage;
 import com.wmj.utils.Constants;
+import com.wmj.utils.GameStateManager;
 
-public class Background extends Actor implements GameStage.GameListener {
+public class Background extends Actor {
 
     private final TextureRegion textureRegion;
     private Rectangle textureRegionBounds1;
     private Rectangle textureRegionBounds2;
     private int speed = 300;
-    private GameState gameState;
 
     public Background() {
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH)));
@@ -27,7 +26,7 @@ public class Background extends Actor implements GameStage.GameListener {
     @Override
     public void act(float delta) {
 
-        if (gameState != GameState.RUNNING) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return;
         }
 
@@ -59,11 +58,6 @@ public class Background extends Actor implements GameStage.GameListener {
     private void resetBounds() {
         textureRegionBounds1 = textureRegionBounds2;
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH+5, 0, Constants.APP_WIDTH+5, Constants.APP_HEIGHT);
-    }
-
-    @Override
-    public void onGameStateChange(GameState newState) {
-        gameState = newState;
     }
 
 }

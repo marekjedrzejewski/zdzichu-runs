@@ -2,10 +2,10 @@ package com.wmj.actors.menu;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.wmj.enums.GameState;
-import com.wmj.stages.GameStage;
 import com.wmj.utils.Constants;
+import com.wmj.utils.GameStateManager;
 
-public class PauseButton extends GameButton implements GameStage.GameListener {
+public class PauseButton extends GameButton {
 
     public interface PauseButtonListener {
         void onPause();
@@ -14,7 +14,6 @@ public class PauseButton extends GameButton implements GameStage.GameListener {
     }
 
     private PauseButtonListener listener;
-    private GameState gameState;
 
     public PauseButton(Rectangle bounds, PauseButtonListener listener) {
         super(bounds);
@@ -23,28 +22,26 @@ public class PauseButton extends GameButton implements GameStage.GameListener {
 
     @Override
     protected String getRegionName() {
-        if (gameState == null) {
-            gameState = GameState.PAUSED;
-        }
+        return GameStateManager.getInstance().getGameState() == GameState.PAUSED
+                ? Constants.PLAY_REGION_NAME
+                : Constants.PAUSE_REGION_NAME;
+    }
 
-        return gameState == GameState.PAUSED ? Constants.PLAY_REGION_NAME : Constants.PAUSE_REGION_NAME;
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (GameStateManager.getInstance().getGameState() == GameState.OVER) {
+            remove();
+        }
     }
 
     @Override
     public void touched() {
-        if (gameState == GameState.PAUSED) {
+        if (GameStateManager.getInstance().getGameState() == GameState.PAUSED) {
             listener.onResume();
         } else {
             listener.onPause();
         }
-    }
-
-    @Override
-    public void onGameStateChange(GameState newState) {
-        if (newState == GameState.OVER) {
-            remove();
-        }
-        gameState = newState;
     }
 
 }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
@@ -23,15 +22,10 @@ import com.wmj.actors.menu.PauseButton;
 import com.wmj.enums.GameState;
 import com.wmj.utils.BodyUtils;
 import com.wmj.utils.Constants;
+import com.wmj.utils.GameStateManager;
 import com.wmj.utils.WorldUtils;
 
-import java.util.ArrayList;
-
 public class GameStage extends Stage implements ContactListener {
-
-    public interface GameListener {
-        void onGameStateChange(GameState newState);
-    }
 
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
@@ -48,8 +42,6 @@ public class GameStage extends Stage implements ContactListener {
 
     private PauseButton pauseButton;
 
-    private ArrayList<GameListener> listeners;
-
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
 
@@ -65,10 +57,8 @@ public class GameStage extends Stage implements ContactListener {
         setupMenu();
         setupTouchControlAreas();
         Gdx.input.setInputProcessor(this);
-        //onGameResumed();
-        //onGamePaused();
+        onGameResumed();
 //        renderer = new Box2DDebugRenderer();
-        //onGameOver();
     }
 
     private void setupMenu() {
@@ -126,7 +116,9 @@ public class GameStage extends Stage implements ContactListener {
     public void act(float delta) {
         super.act(delta);
 
-        if (paused) return;
+        if (paused) {
+            return;
+        }
 
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
@@ -212,6 +204,7 @@ public class GameStage extends Stage implements ContactListener {
         if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b)) ||
                 (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
             runner.hit();
+            onGameOver();
         } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
                 (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
             runner.landed();
@@ -250,23 +243,15 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void onGamePaused() {
-        notifyState(GameState.PAUSED);
+        GameStateManager.getInstance().setGameState(GameState.PAUSED);
     }
 
     private void onGameResumed() {
-        notifyState(GameState.RUNNING);
+        GameStateManager.getInstance().setGameState(GameState.RUNNING);
     }
 
     private void onGameOver() {
-        notifyState(GameState.OVER);
-    }
-
-    private void notifyState(GameState state) {
-        for (Actor actor : getActors()) {
-            if (actor instanceof GameListener) {
-                ((GameListener) actor).onGameStateChange(state);
-            }
-        }
+        GameStateManager.getInstance().setGameState(GameState.OVER);
     }
 
 }

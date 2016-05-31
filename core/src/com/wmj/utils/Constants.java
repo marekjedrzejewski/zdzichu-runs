@@ -22,8 +22,8 @@ public interface Constants {
     float RUNNER_HEIGHT = 2f;
     float RUNNER_GRAVITY_SCALE = 3f;
     float RUNNER_DENSITY = 0.5f;
-    float RUNNER_DODGE_X = 2f;
-    float RUNNER_DODGE_Y = 1.5f;
+    float RUNNER_SLIDE_X = 2f;
+    float RUNNER_SLIDE_Y = 1.5f;
     Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
     float RUNNER_HIT_ANGULAR_IMPULSE = 50f;
 
