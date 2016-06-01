@@ -60,7 +60,6 @@ public class GameStage extends Stage implements ContactListener {
         setUpMainMenu();
         setUpTouchControlAreas();
         Gdx.input.setInputProcessor(this);
-        AudioUtils.getInstance().createMusic();
         onGameOver();
 //        renderer = new Box2DDebugRenderer();
     }
@@ -356,7 +355,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void onGamePaused() {
         GameStateManager.getInstance().setGameState(GameState.PAUSED);
-        AudioUtils.getInstance().pauseMusic();
+        AudioUtils.getInstance().stopMusic();
     }
 
     private void onGameResumed() {
@@ -367,6 +366,7 @@ public class GameStage extends Stage implements ContactListener {
     private void onGameOver() {
         GameStateManager.getInstance().setGameState(GameState.OVER);
         GameStateManager.getInstance().increaseRepetitions();
+        AudioUtils.getInstance().stopMusic();
         setUpMainMenu();
     }
 

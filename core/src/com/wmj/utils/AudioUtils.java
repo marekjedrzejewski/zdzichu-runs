@@ -2,13 +2,12 @@ package com.wmj.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class AudioUtils {
 
     private static AudioUtils instance = new AudioUtils();
-    private static Music music;
+    private static Sound music = createSound(Constants.GAME_MUSIC);
 
     private static final String PREFERENCES_NAME = "preferences";
     private static final String MUSIC_ON_PREFERENCE = "music_on";
@@ -25,21 +24,11 @@ public class AudioUtils {
         return Gdx.app.getPreferences(PREFERENCES_NAME);
     }
 
-    public void createMusic() {
-        music = Gdx.audio.newMusic(Gdx.files.internal(Constants.GAME_MUSIC));
-        music.setLooping(true);
-        playMusic();
-    }
-
     public void playMusic() {
         boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
         if (musicOn) {
-            music.play();
+            music.loop();
         }
-    }
-
-    public void pauseMusic() {
-        music.pause();
     }
 
     public void stopMusic() {
@@ -48,10 +37,6 @@ public class AudioUtils {
 
     public void toggleMusic() {
         saveBoolean(MUSIC_ON_PREFERENCE, !getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true));
-    }
-
-    public void disposeMusic() {
-        music.dispose();
     }
 
     public static Sound createSound(String soundFileName) {
