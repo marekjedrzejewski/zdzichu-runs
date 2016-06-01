@@ -1,6 +1,7 @@
 package com.wmj.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -215,6 +216,36 @@ public class GameStage extends Stage implements ContactListener {
         }
 
         return super.touchUp(x, y, pointer, button);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
+            return super.keyDown(keyCode);
+        }
+
+        if (keyCode == Input.Keys.UP) {
+            runner.jump();
+        } else if (keyCode == Input.Keys.DOWN) {
+            runner.slide();
+        }
+
+        return super.keyDown(keyCode);
+    }
+
+    @Override
+    public boolean keyUp(int keyCode) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
+            return super.keyUp(keyCode);
+        }
+
+        if (keyCode == Input.Keys.DOWN) {
+            if (runner.isSliding()) {
+                runner.stopSlide();
+            }
+        }
+
+        return super.keyUp(keyCode);
     }
 
     private boolean menuControlTouched(float x, float y) {
