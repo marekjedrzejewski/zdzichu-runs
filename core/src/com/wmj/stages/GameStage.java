@@ -220,6 +220,20 @@ public class GameStage extends Stage implements ContactListener {
 
     @Override
     public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.SPACE) {
+            switch (GameStateManager.getInstance().getGameState()) {
+                case OVER:
+                    onGameStarted();
+                    break;
+                case RUNNING:
+                    onGamePaused();
+                    break;
+                case PAUSED:
+                    onGameResumed();
+                    break;
+            }
+        }
+
         if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return super.keyDown(keyCode);
         }
@@ -327,11 +341,15 @@ public class GameStage extends Stage implements ContactListener {
 
         @Override
         public void onStart() {
-            setUpCharacters();
-            setUpPause();
-            onGameResumed();
+            onGameStarted();
         }
 
+    }
+
+    private void onGameStarted() {
+        setUpCharacters();
+        setUpPause();
+        onGameResumed();
     }
 
     private void onGamePaused() {
