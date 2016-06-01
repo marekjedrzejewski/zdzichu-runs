@@ -48,6 +48,13 @@ public interface Constants {
     String PAUSE_REGION_NAME = "pause60";
     String PLAY_REGION_NAME = "play60";
 
+    String SOUND_ON_REGION_NAME = "sound_on";
+    String SOUND_OFF_REGION_NAME = "sound_off";
+    String MUSIC_ON_REGION_NAME = "music_on";
+    String MUSIC_OFF_REGION_NAME = "music_off";
+
+    String GAME_MUSIC = "sounds/soundtrack_loop.ogg";
+
     AnimParameters JASTRZAB_ANIM = new AnimParameters("falcon_sheet_64.png",
             30, 64, 64);
     AnimParameters MALUCH_ANIM = new AnimParameters("car_sheet_96.png",
