@@ -1,5 +1,6 @@
 package com.wmj.actors.menu;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,7 +20,7 @@ public abstract class GameButton extends Button {
         setHeight(bounds.height);
         setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
         skin = new Skin();
-        skin.addRegions(new TextureAtlas(Constants.SPRITES_ATLAS_PATH));
+        skin.addRegions(new TextureAtlas(Constants.INTERFACE_ELEMENTS_ATLAS_PATH));
         loadTextureRegion();
         addListener(new ClickListener() {
             @Override

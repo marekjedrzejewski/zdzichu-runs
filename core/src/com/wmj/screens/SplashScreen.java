@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.wmj.ZdzichuRuns;
+import com.wmj.utils.Constants;
 
 public class SplashScreen implements Screen {
 
@@ -24,7 +25,7 @@ public class SplashScreen implements Screen {
 
     @Override
     public void show() {
-        logo = new Texture(Gdx.files.internal("interface_elements/splash.png"));
+        logo = new Texture(Gdx.files.internal(Constants.SPLASH_SCREEN_IMAGE_PATH));
         spriteBatch = new SpriteBatch();
         startTime = TimeUtils.millis();
     }

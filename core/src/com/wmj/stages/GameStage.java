@@ -68,10 +68,10 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpPause() {
         Rectangle pauseButtonBounds = new Rectangle(
-                getCamera().viewportWidth / 40,
-                getCamera().viewportHeight * 17 / 20,
-                getCamera().viewportHeight / 10,
-                getCamera().viewportHeight / 10);
+                20,
+                getCamera().viewportHeight - Constants.BUTTON_HEIGHT - 20,
+                Constants.BUTTON_WIDTH,
+                Constants.BUTTON_HEIGHT);
         pauseButton = new PauseButton(pauseButtonBounds, new GamePauseButtonListener());
         addActor(pauseButton);
     }
@@ -82,10 +82,10 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpStart() {
         Rectangle startButtonBounds = new Rectangle(
-                getCamera().viewportWidth * 3 / 16,
-                getCamera().viewportHeight / 3,
-                getCamera().viewportWidth / 4,
-                getCamera().viewportWidth / 4);
+                (getCamera().viewportWidth - Constants.BIG_BUTTON_WIDTH) / 2,
+                (getCamera().viewportHeight - Constants.BIG_BUTTON_HEIGHT) / 2,
+                Constants.BIG_BUTTON_WIDTH,
+                Constants.BIG_BUTTON_HEIGHT);
         startButton = new StartButton(startButtonBounds, new GameStartButtonListener());
         addActor(startButton);
     }
@@ -313,6 +313,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void onGameOver() {
         GameStateManager.getInstance().setGameState(GameState.OVER);
+        GameStateManager.getInstance().increaseRepetitions();
         setUpMainMenu();
     }
 

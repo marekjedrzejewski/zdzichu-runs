@@ -34,18 +34,23 @@ public interface Constants {
     float FLYING_ENEMY_Y = 3f;
     Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
 
-
     String BACKGROUND_IMAGE_PATH = "backdrops/notebook_800x480.jpg";
-    String SPRITES_ATLAS_PATH = "sprites.txt";
+    String SPLASH_SCREEN_IMAGE_PATH = "interface_elements/splash.png";
+    String INTERFACE_ELEMENTS_ATLAS_PATH = "interface_elements/buttons.atlas";
 
+    int BIG_BUTTON_HEIGHT = 200;
+    int BIG_BUTTON_WIDTH = 200;
+    int BUTTON_HEIGHT = 60;
+    int BUTTON_WIDTH = 60;
+
+    String BIG_PLAY_REGION_NAME = "play200";
+    String BIG_RESTART_REGION_NAME = "restart200";
+    String PAUSE_REGION_NAME = "pause60";
+    String PLAY_REGION_NAME = "play60";
 
     AnimParameters JASTRZAB_ANIM = new AnimParameters("falcon_sheet_64.png",
             30, 64, 64);
     AnimParameters MALUCH_ANIM = new AnimParameters("car_sheet_96.png",
             15, 96, 128);
 
-
-    String PAUSE_REGION_NAME = "pause";
-    String PLAY_REGION_NAME = "play";
-    String BIG_PLAY_REGION_NAME = "play_big";
 }

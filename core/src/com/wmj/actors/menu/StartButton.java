@@ -1,5 +1,7 @@
 package com.wmj.actors.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.wmj.enums.GameState;
 import com.wmj.utils.Constants;
@@ -20,7 +22,9 @@ public class StartButton extends GameButton {
 
     @Override
     protected String getRegionName() {
-        return Constants.BIG_PLAY_REGION_NAME;
+        return GameStateManager.getInstance().isFirstGame()
+                ? Constants.BIG_PLAY_REGION_NAME
+                : Constants.BIG_RESTART_REGION_NAME;
     }
 
     @Override

@@ -8,6 +8,8 @@ public class GameStateManager {
 
     private GameState gameState;
 
+    private static int gameRepetitions;
+
     public static GameStateManager getInstance() {
         return instance;
     }
@@ -22,6 +24,14 @@ public class GameStateManager {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public boolean isFirstGame() {
+        return gameRepetitions == 1;
+    }
+
+    public void increaseRepetitions() {
+        gameRepetitions++;
     }
 
 }
