@@ -1,20 +1,19 @@
 package com.wmj.actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.wmj.box2d.RunnerUserData;
 import com.wmj.enums.GameState;
+import com.wmj.utils.GameStateManager;
 
 public class Runner extends GameActor {
 
     private boolean jumping;
-    private boolean dodging;
+    private boolean sliding;
     private boolean hit;
 
     private static final float TIME_PER_FRAME = 0.033f;
@@ -64,15 +63,16 @@ public class Runner extends GameActor {
         if (jumping) {
             currentFrame = jumpAnim.getKeyFrame(stateTime, false);
             batch.draw(currentFrame, x, y);
-        } else if (dodging) {
+        } else if (sliding) {
             currentFrame = slideAnim.getKeyFrame(stateTime, true);
             batch.draw(currentFrame, x, y);
         } else {
-            if (gameState == GameState.RUNNING) {
+            if (GameStateManager.getInstance().getGameState() == GameState.RUNNING) {
                 stateTime += Gdx.graphics.getDeltaTime();
             }
 
             currentFrame = runAnim.getKeyFrame(stateTime, true);
+
             batch.draw(currentFrame, x, y);
         }
     }
@@ -83,11 +83,11 @@ public class Runner extends GameActor {
     }
 
     public void jump() {
-        if (gameState != GameState.RUNNING) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return;
         }
 
-        if (!(jumping || dodging || hit)) {
+        if (!(jumping || sliding || hit)) {
             stateTime = 0;
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
@@ -99,18 +99,18 @@ public class Runner extends GameActor {
     }
 
     public void slide() {
-        if (gameState != GameState.RUNNING) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return;
         }
 
         if (!(jumping || hit)) {
-            body.setTransform(getUserData().getDodgePosition(), getUserData().getDodgeAngle());
-            dodging = true;
+            body.setTransform(getUserData().getSlidePosition(), getUserData().getSlideAngle());
+            sliding = true;
         }
     }
 
     public void stopSlide() {
-        dodging = false;
+        sliding = false;
 
         if (!hit) {
             body.setTransform(getUserData().getRunningPosition(), 0f);
@@ -118,7 +118,7 @@ public class Runner extends GameActor {
     }
 
     public boolean isSliding() {
-        return dodging;
+        return sliding;
     }
 
     public void hit() {

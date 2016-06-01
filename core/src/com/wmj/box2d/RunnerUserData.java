@@ -7,7 +7,7 @@ import com.wmj.utils.Constants;
 public class RunnerUserData extends UserData {
 
     private final Vector2 runningPosition = new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y);
-    private final Vector2 dodgePosition = new Vector2(Constants.RUNNER_DODGE_X, Constants.RUNNER_DODGE_Y);
+    private final Vector2 slidePosition = new Vector2(Constants.RUNNER_SLIDE_X, Constants.RUNNER_SLIDE_Y);
     private Vector2 jumpingLinearImpulse;
 
     public RunnerUserData() {
@@ -30,7 +30,7 @@ public class RunnerUserData extends UserData {
         this.jumpingLinearImpulse = jumpingLinearImpulse;
     }
 
-    public float getDodgeAngle() {
+    public float getSlideAngle() {
         return (float) (-90f * (Math.PI / 180f));
     }
 
@@ -38,8 +38,8 @@ public class RunnerUserData extends UserData {
         return runningPosition;
     }
 
-    public Vector2 getDodgePosition() {
-        return dodgePosition;
+    public Vector2 getSlidePosition() {
+        return slidePosition;
     }
 
     public float getHitAngularImpulse() {

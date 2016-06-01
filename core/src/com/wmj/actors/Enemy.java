@@ -4,15 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.wmj.box2d.EnemyUserData;
-import com.wmj.box2d.UserData;
 import com.wmj.enums.GameState;
 import com.wmj.utils.AnimParameters;
-import com.wmj.utils.Constants;
+import com.wmj.utils.GameStateManager;
 
 public class Enemy extends GameActor {
 
@@ -50,8 +47,12 @@ public class Enemy extends GameActor {
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
 
-        stateTime += Gdx.graphics.getDeltaTime();
+        if (GameStateManager.getInstance().getGameState() == GameState.RUNNING) {
+            stateTime += Gdx.graphics.getDeltaTime();
+        }
+
         currentFrame = enemyAnim.getKeyFrame(stateTime, true);
+
         batch.draw(currentFrame, x, y);
     }
 

@@ -32,7 +32,7 @@ public abstract class GameButton extends Button {
     }
 
     protected void loadTextureRegion() {
-        ButtonStyle style = new Button.ButtonStyle();
+        ButtonStyle style = new ButtonStyle();
         style.up = skin.getDrawable(getRegionName());
         setStyle(style);
     }
