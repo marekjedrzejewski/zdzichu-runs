@@ -47,4 +47,5 @@ public interface Constants {
 
     String PAUSE_REGION_NAME = "pause";
     String PLAY_REGION_NAME = "play";
+    String BIG_PLAY_REGION_NAME = "play_big";
 }

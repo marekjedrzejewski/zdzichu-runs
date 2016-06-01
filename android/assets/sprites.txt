@@ -121,6 +121,13 @@ play
   orig: 48, 48
   offset: 0, 0
   index: -1
+play_big
+  rotate: false
+  xy: 52, 295
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 sound_off
   rotate: false
   xy: 102, 295

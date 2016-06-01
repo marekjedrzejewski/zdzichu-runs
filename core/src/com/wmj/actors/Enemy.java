@@ -47,7 +47,7 @@ public class Enemy extends GameActor {
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
 
-        if (GameStateManager.getInstance().getGameState() == GameState.RUNNING) {
+        if (GameStateManager.getInstance().getGameState() != GameState.PAUSED) {
             stateTime += Gdx.graphics.getDeltaTime();
         }
 

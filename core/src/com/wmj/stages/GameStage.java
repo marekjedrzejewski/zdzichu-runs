@@ -19,6 +19,7 @@ import com.wmj.actors.Enemy;
 import com.wmj.actors.Ground;
 import com.wmj.actors.Runner;
 import com.wmj.actors.menu.PauseButton;
+import com.wmj.actors.menu.StartButton;
 import com.wmj.enums.GameState;
 import com.wmj.utils.BodyUtils;
 import com.wmj.utils.Constants;
@@ -40,32 +41,32 @@ public class GameStage extends Stage implements ContactListener {
     private OrthographicCamera camera;
 //    private Box2DDebugRenderer renderer;
 
-    private PauseButton pauseButton;
-
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
 
-    private Vector3 touchPoint;
+    private PauseButton pauseButton;
+    private StartButton startButton;
 
-    private boolean paused;
+    private Vector3 touchPoint;
 
     public GameStage() {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
-        setupCamera();
-        setupMenu();
-        setupTouchControlAreas();
+        setUpCamera();
+        setUpFixedMenu();
+        setUpMainMenu();
+        setUpTouchControlAreas();
         Gdx.input.setInputProcessor(this);
-        onGameResumed();
+        onGameOver();
 //        renderer = new Box2DDebugRenderer();
     }
 
-    private void setupMenu() {
-        setupPause();
+    private void setUpFixedMenu() {
+        //setUpPause();
     }
 
-    private void setupPause() {
+    private void setUpPause() {
         Rectangle pauseButtonBounds = new Rectangle(
                 getCamera().viewportWidth / 40,
                 getCamera().viewportHeight * 17 / 20,
@@ -75,13 +76,25 @@ public class GameStage extends Stage implements ContactListener {
         addActor(pauseButton);
     }
 
+    private void setUpMainMenu() {
+        setUpStart();
+    }
+
+    private void setUpStart() {
+        Rectangle startButtonBounds = new Rectangle(
+                getCamera().viewportWidth * 3 / 16,
+                getCamera().viewportHeight / 3,
+                getCamera().viewportWidth / 4,
+                getCamera().viewportWidth / 4);
+        startButton = new StartButton(startButtonBounds, new GameStartButtonListener());
+        addActor(startButton);
+    }
+
     private void setUpWorld() {
         world = WorldUtils.createWorld();
         world.setContactListener(this);
         setUpBackground();
         setUpGround();
-        setUpRunner();
-        createEnemy();
     }
 
     private void setUpBackground() {
@@ -93,30 +106,45 @@ public class GameStage extends Stage implements ContactListener {
         addActor(ground);
     }
 
+    private void setUpCharacters() {
+        setUpRunner();
+        createEnemy();
+    }
+
     private void setUpRunner() {
+        if (runner != null) {
+            runner.remove();
+        }
+
         runner = new Runner(WorldUtils.createRunner(world));
         addActor(runner);
     }
 
-    private void setupCamera() {
+    private void setUpCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
 
-    private void setupTouchControlAreas() {
+    private void setUpTouchControlAreas() {
         touchPoint = new Vector3();
-        screenTopSide = new Rectangle(0, getCamera().viewportHeight / 2,
-                getCamera().viewportWidth, getCamera().viewportHeight / 2);
-        screenBottomSide = new Rectangle(0, 0,
-                getCamera().viewportWidth, getCamera().viewportHeight / 2);
+        screenTopSide = new Rectangle(
+                0,
+                getCamera().viewportHeight / 2,
+                getCamera().viewportWidth,
+                getCamera().viewportHeight / 2);
+        screenBottomSide = new Rectangle(
+                0,
+                0,
+                getCamera().viewportWidth,
+                getCamera().viewportHeight / 2);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
-        if (paused) {
+        if (GameStateManager.getInstance().getGameState() == GameState.PAUSED) {
             return;
         }
 
@@ -158,7 +186,12 @@ public class GameStage extends Stage implements ContactListener {
         // Need to get the actual coordinates
         translateScreenToWorldCoordinates(x, y);
 
+        // If a menu control was touched ignore the rest
         if (menuControlTouched(touchPoint.x, touchPoint.y)) {
+            return super.touchDown(x, y, pointer, button);
+        }
+
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return super.touchDown(x, y, pointer, button);
         }
 
@@ -172,16 +205,32 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    public boolean touchUp(int x, int y, int pointer, int button) {
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
+            return super.touchUp(x, y, pointer, button);
+        }
+
         if (runner.isSliding()) {
             runner.stopSlide();
         }
 
-        return super.touchUp(screenX, screenY, pointer, button);
+        return super.touchUp(x, y, pointer, button);
     }
 
     private boolean menuControlTouched(float x, float y) {
-        return pauseButton.getBounds().contains(x, y);
+        boolean touched = false;
+
+        switch (GameStateManager.getInstance().getGameState()) {
+            case OVER:
+                touched = startButton.getBounds().contains(x, y);
+                break;
+            case RUNNING:
+            case PAUSED:
+                touched = pauseButton.getBounds().contains(x, y);
+                break;
+        }
+
+        return touched;
     }
 
     private boolean topSideTouched(float x, float y) {
@@ -203,6 +252,9 @@ public class GameStage extends Stage implements ContactListener {
 
         if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b)) ||
                 (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
+            if (runner.isHit()) {
+                return;
+            }
             runner.hit();
             onGameOver();
         } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
@@ -230,13 +282,22 @@ public class GameStage extends Stage implements ContactListener {
 
         @Override
         public void onPause() {
-            paused = true;
             onGamePaused();
         }
 
         @Override
         public void onResume() {
-            paused = false;
+            onGameResumed();
+        }
+
+    }
+
+    private class GameStartButtonListener implements StartButton.StartButtonListener {
+
+        @Override
+        public void onStart() {
+            setUpCharacters();
+            setUpPause();
             onGameResumed();
         }
 
@@ -252,6 +313,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void onGameOver() {
         GameStateManager.getInstance().setGameState(GameState.OVER);
+        setUpMainMenu();
     }
 
 }

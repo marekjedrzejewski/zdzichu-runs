@@ -9,7 +9,6 @@ public class PauseButton extends GameButton {
 
     public interface PauseButtonListener {
         void onPause();
-
         void onResume();
     }
 
