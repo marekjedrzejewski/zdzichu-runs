@@ -31,10 +31,6 @@ public class AudioUtils {
         playMusic();
     }
 
-    public static Sound createSound(String soundFileName) {
-        return Gdx.audio.newSound(Gdx.files.internal(soundFileName));
-    }
-
     public void playMusic() {
         boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
         if (musicOn) {
@@ -42,15 +38,31 @@ public class AudioUtils {
         }
     }
 
+    public void pauseMusic() {
+        music.pause();
+    }
+
+    public void stopMusic() {
+        music.stop();
+    }
+
+    public void toggleMusic() {
+        saveBoolean(MUSIC_ON_PREFERENCE, !getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true));
+    }
+
+    public void disposeMusic() {
+        music.dispose();
+    }
+
+    public static Sound createSound(String soundFileName) {
+        return Gdx.audio.newSound(Gdx.files.internal(soundFileName));
+    }
+
     public void playSound(Sound sound) {
         boolean soundOn = getPreferences().getBoolean(SOUND_ON_PREFERENCE, true);
         if (soundOn) {
             sound.play();
         }
-    }
-
-    public void toggleMusic() {
-        saveBoolean(MUSIC_ON_PREFERENCE, !getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true));
     }
 
     public void toggleSound() {
@@ -61,18 +73,6 @@ public class AudioUtils {
         Preferences preferences = getPreferences();
         preferences.putBoolean(key, value);
         preferences.flush();
-    }
-
-    public void disposeMusic(Music music) {
-        music.dispose();
-    }
-
-    public void stopMusic(Music music) {
-        music.stop();
-    }
-
-    public void pauseMusic(Music music) {
-        music.pause();
     }
 
     public String getSoundRegionName() {

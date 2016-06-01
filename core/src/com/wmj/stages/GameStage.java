@@ -356,10 +356,12 @@ public class GameStage extends Stage implements ContactListener {
 
     private void onGamePaused() {
         GameStateManager.getInstance().setGameState(GameState.PAUSED);
+        AudioUtils.getInstance().pauseMusic();
     }
 
     private void onGameResumed() {
         GameStateManager.getInstance().setGameState(GameState.RUNNING);
+        AudioUtils.getInstance().playMusic();
     }
 
     private void onGameOver() {
