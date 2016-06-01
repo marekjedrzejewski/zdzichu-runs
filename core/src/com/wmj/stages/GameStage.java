@@ -22,6 +22,7 @@ import com.wmj.actors.Runner;
 import com.wmj.actors.menu.PauseButton;
 import com.wmj.actors.menu.StartButton;
 import com.wmj.enums.GameState;
+import com.wmj.utils.AudioUtils;
 import com.wmj.utils.BodyUtils;
 import com.wmj.utils.Constants;
 import com.wmj.utils.GameStateManager;
@@ -59,6 +60,7 @@ public class GameStage extends Stage implements ContactListener {
         setUpMainMenu();
         setUpTouchControlAreas();
         Gdx.input.setInputProcessor(this);
+        AudioUtils.getInstance().createMusic();
         onGameOver();
 //        renderer = new Box2DDebugRenderer();
     }
