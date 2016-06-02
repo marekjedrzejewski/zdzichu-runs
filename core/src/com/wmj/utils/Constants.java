@@ -29,8 +29,8 @@ public interface Constants {
 
     float ENEMY_X = 25f;
     float ENEMY_DENSITY = RUNNER_DENSITY;
-    float RUNNING_SHORT_ENEMY_Y = 1.5f;
-    float RUNNING_LONG_ENEMY_Y = 2f;
+    float ENEMY_Y = 1.2f;
+    float ENEMY_Y_BIG = 1.6f;
     float FLYING_ENEMY_Y = 3f;
     Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
 
@@ -55,9 +55,15 @@ public interface Constants {
 
     String GAME_MUSIC = "sounds/soundtrack_loop.ogg";
 
-    AnimParameters JASTRZAB_ANIM = new AnimParameters("falcon_sheet_64.png",
+    AnimParameters JASTRZAB_ANIM = new AnimParameters("animation_sheets/falcon_sheet_64.png",
             30, 64, 64);
-    AnimParameters MALUCH_ANIM = new AnimParameters("car_sheet_96.png",
+    AnimParameters MALUCH_ANIM = new AnimParameters("animation_sheets/car_sheet_96.png",
             15, 96, 128);
+    AnimParameters CACTUS_ANIM_1 = new AnimParameters("static_actors/cactus_small1.png",
+            1, 64, 64);
+    AnimParameters CACTUS_ANIM_2 = new AnimParameters("static_actors/cactus_small2.png",
+            1, 64, 64);
+    AnimParameters CACTUS_ANIM_3 = new AnimParameters("static_actors/cactus_tall3.png",
+            1, 128, 64);
 
 }

@@ -11,14 +11,15 @@ public enum EnemyType {
 //    //Kaktus
 //    RUNNING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
 //            Constants.RUNNING_WIDE_ENEMY_REGION_NAMES),
-//    //Kaktus
-//    RUNNING_LONG(1f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
-//            Constants.RUNNING_LONG_ENEMY_REGION_NAMES),
-//    //Maluch
-    RUNNING_BIG(3f, 2f, Constants.ENEMY_X, Constants.RUNNING_LONG_ENEMY_Y, Constants.ENEMY_DENSITY,
+    CACTUS_3(1f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+        Constants.CACTUS_ANIM_3),
+    CACTUS_2(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
+        Constants.CACTUS_ANIM_2),
+    CACTUS_1(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
+            Constants.CACTUS_ANIM_1),
+    MALUCH(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
             Constants.MALUCH_ANIM),
-    //Jastrzab
-    FLYING_SMALL(1f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
+    JASTRZAB(1f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
             Constants.JASTRZAB_ANIM);
 
     private float width;

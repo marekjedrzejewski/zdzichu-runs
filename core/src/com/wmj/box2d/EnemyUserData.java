@@ -13,8 +13,8 @@ public class EnemyUserData extends UserData {
     public EnemyUserData(float width, float height, AnimParameters animParameters) {
         super(width, height);
         userDataType = UserDataType.ENEMY;
-        linearVelocity = Constants.ENEMY_LINEAR_VELOCITY;
         this.animParameters = animParameters;
+        linearVelocity = Constants.ENEMY_LINEAR_VELOCITY;
     }
 
     public void setLinearVelocity(Vector2 linearVelocity) {

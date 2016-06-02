@@ -31,7 +31,7 @@ public class Enemy extends GameActor {
     }
 
     private Animation loadAnimation(String filename, int frames, int frame_w, int frame_h) {
-        Texture animSheet = new Texture(Gdx.files.internal("animation_sheets/" + filename));
+        Texture animSheet = new Texture(Gdx.files.internal(filename));
         TextureRegion[] runFrames = new TextureRegion[frames];
         for (int i = 0; i < frames ; i++) {
             runFrames[i] = new TextureRegion(animSheet, i*frame_w, 0, frame_w, frame_h);
@@ -46,6 +46,9 @@ public class Enemy extends GameActor {
 
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
+        //ToDo: do it better
+        if(x == 0)
+            return;
 
         if (x == 0) {
             return;

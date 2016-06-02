@@ -2,10 +2,12 @@ package com.wmj.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -41,7 +43,7 @@ public class GameStage extends Stage implements ContactListener {
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
-//    private Box2DDebugRenderer renderer;
+    private Box2DDebugRenderer renderer;
 
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
@@ -51,9 +53,12 @@ public class GameStage extends Stage implements ContactListener {
 
     private Vector3 touchPoint;
 
-    public GameStage() {
+    public GameStage(World world) {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
+
+        this.world = world;
+
         setUpWorld();
         setUpCamera();
         setUpFixedMenu();
@@ -61,8 +66,8 @@ public class GameStage extends Stage implements ContactListener {
         setUpTouchControlAreas();
         Gdx.input.setInputProcessor(this);
         onGameOver();
-//        renderer = new Box2DDebugRenderer();
     }
+
 
     private void setUpFixedMenu() {
         //setUpPause();
@@ -93,7 +98,6 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpWorld() {
-        world = WorldUtils.createWorld();
         world.setContactListener(this);
         setUpBackground();
         setUpGround();
@@ -141,6 +145,8 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportWidth,
                 getCamera().viewportHeight / 2);
     }
+
+
 
     @Override
     public void act(float delta) {

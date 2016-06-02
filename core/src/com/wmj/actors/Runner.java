@@ -60,16 +60,17 @@ public class Runner extends GameActor {
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
 
+        if (GameStateManager.getInstance().getGameState() == GameState.RUNNING) {
+            stateTime += Gdx.graphics.getDeltaTime();
+        }
+
         if (jumping) {
             currentFrame = jumpAnim.getKeyFrame(stateTime, false);
-            batch.draw(currentFrame, x, y);
+            batch.draw(currentFrame, x + 15f, y);
         } else if (sliding) {
             currentFrame = slideAnim.getKeyFrame(stateTime, true);
             batch.draw(currentFrame, x, y);
         } else {
-            if (GameStateManager.getInstance().getGameState() == GameState.RUNNING) {
-                stateTime += Gdx.graphics.getDeltaTime();
-            }
 
             currentFrame = runAnim.getKeyFrame(stateTime, true);
 
