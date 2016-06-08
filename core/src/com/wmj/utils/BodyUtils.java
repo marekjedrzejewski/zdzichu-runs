@@ -11,6 +11,7 @@ public class BodyUtils {
 
         switch (userData.getUserDataType()) {
             case RUNNER:
+                break;
             case ENEMY:
                 return body.getPosition().x + userData.getWidth() / 2 > 0;
         }

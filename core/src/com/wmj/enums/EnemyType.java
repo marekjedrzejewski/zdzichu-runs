@@ -1,5 +1,6 @@
 package com.wmj.enums;
 
+import com.badlogic.gdx.math.Vector2;
 import com.wmj.utils.Constants;
 import com.wmj.utils.AnimParameters;
 
@@ -11,16 +12,17 @@ public enum EnemyType {
 //    //Kaktus
 //    RUNNING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
 //            Constants.RUNNING_WIDE_ENEMY_REGION_NAMES),
+
     CACTUS_3(1f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
-        Constants.CACTUS_ANIM_3),
+        Constants.CACTUS_ANIM_3, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
     CACTUS_2(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
-        Constants.CACTUS_ANIM_2),
+        Constants.CACTUS_ANIM_2, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
     CACTUS_1(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.CACTUS_ANIM_1),
+            Constants.CACTUS_ANIM_1, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
     MALUCH(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
-            Constants.MALUCH_ANIM),
+            Constants.MALUCH_ANIM, Constants.DYNAMIC_ENEMY_LINEAR_VELOCITY),
     JASTRZAB(1f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.JASTRZAB_ANIM);
+            Constants.JASTRZAB_ANIM, Constants.SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY);
 
     private float width;
     private float height;
@@ -28,13 +30,15 @@ public enum EnemyType {
     private float y;
     private float density;
     private AnimParameters animParameters;
+    private Vector2 velocity;
 
-    EnemyType(float width, float height, float x, float y, float density,
-              AnimParameters animParameters) {
+    EnemyType(float width, float height, float x, float y, float density, AnimParameters animParameters,
+              Vector2 velocity) {
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
+        this.velocity = velocity;
         this.density = density;
         this.animParameters = animParameters;
     }
@@ -62,5 +66,7 @@ public enum EnemyType {
     public AnimParameters getAnimParameters() {
         return animParameters;
     }
+
+    public Vector2 getVelocity(){ return velocity; }
 
 }

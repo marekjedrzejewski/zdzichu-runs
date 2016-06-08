@@ -2,7 +2,6 @@ package com.wmj.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -30,10 +29,19 @@ import com.wmj.utils.Constants;
 import com.wmj.utils.GameStateManager;
 import com.wmj.utils.WorldUtils;
 
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.MessageContext;
+
+import sun.rmi.runtime.Log;
+
 public class GameStage extends Stage implements ContactListener {
 
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
+
+    private int createdEnemies = 1;
+    private int counter;
+    private int speed = 300;
 
     private World world;
     private Ground ground;
@@ -43,7 +51,6 @@ public class GameStage extends Stage implements ContactListener {
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
-    private Box2DDebugRenderer renderer;
 
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
@@ -158,7 +165,6 @@ public class GameStage extends Stage implements ContactListener {
 
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
-
         for (Body body : bodies) {
             update(body);
         }
@@ -176,12 +182,15 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void update(Body body) {
+//        int a = createdBodies;
+//        if(createdBodies > createdEnemies) {
         if (!BodyUtils.bodyInBounds(body)) {
             if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
                 createEnemy();
             }
             world.destroyBody(body);
         }
+//        }
     }
 
     private void createEnemy() {
@@ -375,5 +384,4 @@ public class GameStage extends Stage implements ContactListener {
         AudioUtils.getInstance().stopMusic();
         setUpMainMenu();
     }
-
 }

@@ -61,7 +61,8 @@ public class WorldUtils {
         Body body = world.createBody(bodyDef);
         body.createFixture(shape, enemyType.getDensity());
         body.resetMassData();
-        EnemyUserData userData = new EnemyUserData(enemyType.getWidth(), enemyType.getHeight(), enemyType.getAnimParameters());
+        EnemyUserData userData = new EnemyUserData(enemyType.getWidth(), enemyType.getHeight(),
+                enemyType.getAnimParameters(), enemyType.getVelocity());
         body.setUserData(userData);
         shape.dispose();
 

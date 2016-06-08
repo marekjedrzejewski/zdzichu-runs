@@ -27,13 +27,6 @@ public interface Constants {
     Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
     float RUNNER_HIT_ANGULAR_IMPULSE = 50f;
 
-    float ENEMY_X = 25f;
-    float ENEMY_DENSITY = RUNNER_DENSITY;
-    float ENEMY_Y = 1.2f;
-    float ENEMY_Y_BIG = 1.6f;
-    float FLYING_ENEMY_Y = 3f;
-    Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
-
     String BACKGROUND_IMAGE_PATH = "backdrops/notebook_800x480.jpg";
     String SPLASH_SCREEN_IMAGE_PATH = "interface_elements/splash.png";
     String INTERFACE_ELEMENTS_ATLAS_PATH = "interface_elements/buttons.atlas";
@@ -54,6 +47,17 @@ public interface Constants {
     String MUSIC_OFF_REGION_NAME = "music_off";
 
     String GAME_MUSIC = "sounds/soundtrack_loop.ogg";
+
+    //ENEMY STUFF
+    int INCREASE_COUNTER = 5;
+    float ENEMY_X = 25f;
+    float ENEMY_DENSITY = RUNNER_DENSITY;
+    float ENEMY_Y = 1.2f;
+    float ENEMY_Y_BIG = 1.6f;
+    float FLYING_ENEMY_Y = 3.0f;
+    Vector2 STATIC_ENEMY_LINEAR_VELOCITY = new Vector2(-9.3f, 0);
+    Vector2 DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-12f, 0);
+    Vector2 SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-18f, 0);
 
     AnimParameters JASTRZAB_ANIM = new AnimParameters("animation_sheets/falcon_sheet_64.png",
             30, 64, 64);

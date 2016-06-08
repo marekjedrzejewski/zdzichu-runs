@@ -46,9 +46,6 @@ public class Enemy extends GameActor {
 
         float x = screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
-        //ToDo: do it better
-        if(x == 0)
-            return;
 
         if (x == 0) {
             return;
