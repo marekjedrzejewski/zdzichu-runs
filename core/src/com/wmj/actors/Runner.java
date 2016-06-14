@@ -1,6 +1,7 @@
 package com.wmj.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.wmj.box2d.RunnerUserData;
 import com.wmj.enums.GameState;
+import com.wmj.utils.AudioUtils;
+import com.wmj.utils.Constants;
 import com.wmj.utils.GameStateManager;
 
 public class Runner extends GameActor {
@@ -34,6 +37,9 @@ public class Runner extends GameActor {
     TextureRegion currentFrame;
     float stateTime;
 
+    private Sound jumpSound;
+    private Sound hitSound;
+
     public Runner(Body body) {
         super(body);
 
@@ -42,6 +48,9 @@ public class Runner extends GameActor {
         slideAnim = loadAnimation("slide_sheet_32.png", SLIDE_FRAMES, SLIDE_FRAME_W, SLIDE_FRAME_H);
 
         stateTime = 0f;
+
+        jumpSound = AudioUtils.createSound(Constants.RUNNER_JUMP_SOUND);
+        hitSound = AudioUtils.createSound(Constants.RUNNER_HIT_SOUND);
     }
 
     private Animation loadAnimation(String filename, int frames, int frame_w, int frame_h) {
@@ -92,6 +101,7 @@ public class Runner extends GameActor {
             stateTime = 0;
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
+            AudioUtils.getInstance().playSound(jumpSound);
         }
     }
 
@@ -123,9 +133,9 @@ public class Runner extends GameActor {
     }
 
     public void hit() {
-
         body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
         hit = true;
+        AudioUtils.getInstance().playSound(hitSound);
     }
 
     public boolean isHit() {

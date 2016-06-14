@@ -29,12 +29,14 @@ public interface Constants {
 
     String BACKGROUND_IMAGE_PATH = "backdrops/notebook_800x480.jpg";
     String SPLASH_SCREEN_IMAGE_PATH = "interface_elements/splash.png";
-    String INTERFACE_ELEMENTS_ATLAS_PATH = "interface_elements/buttons.atlas";
+    String INTERFACE_ELEMENTS_ATLAS_PATH = "interface_elements/buttons.pack";
 
     int BIG_BUTTON_HEIGHT = 200;
     int BIG_BUTTON_WIDTH = 200;
     int BUTTON_HEIGHT = 60;
     int BUTTON_WIDTH = 60;
+    int SPACE_HEIGHT = 20;
+    int SPACE_WIDTH = 20;
 
     String BIG_PLAY_REGION_NAME = "play200";
     String BIG_RESTART_REGION_NAME = "restart200";
@@ -47,6 +49,8 @@ public interface Constants {
     String MUSIC_OFF_REGION_NAME = "music_off";
 
     String GAME_MUSIC = "sounds/soundtrack_loop.ogg";
+    String RUNNER_JUMP_SOUND = "sounds/jump.wav";
+    String RUNNER_HIT_SOUND = "sounds/hit.wav";
 
     //ENEMY STUFF
     int INCREASE_COUNTER = 5;

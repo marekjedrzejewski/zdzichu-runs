@@ -3,6 +3,7 @@ package com.wmj.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
+import com.wmj.enums.GameState;
 
 public class AudioUtils {
 
@@ -26,6 +27,11 @@ public class AudioUtils {
 
     public void playMusic() {
         boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
+
+        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
+            return;
+        }
+
         if (musicOn) {
             music.loop();
         }
@@ -36,7 +42,15 @@ public class AudioUtils {
     }
 
     public void toggleMusic() {
-        saveBoolean(MUSIC_ON_PREFERENCE, !getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true));
+        boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
+
+        if (musicOn) {
+            saveBoolean(MUSIC_ON_PREFERENCE, false);
+            stopMusic();
+        } else {
+            saveBoolean(MUSIC_ON_PREFERENCE, true);
+            playMusic();
+        }
     }
 
     public static Sound createSound(String soundFileName) {
