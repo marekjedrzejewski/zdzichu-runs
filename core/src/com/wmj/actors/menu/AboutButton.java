@@ -30,8 +30,7 @@ public class AboutButton extends GameButton {
 
     @Override
     protected String getRegionName() {
-        return Constants.PAUSE_REGION_NAME;
-        //return Constants.ABOUT_REGION_NAME;
+        return Constants.ABOUT_REGION_NAME;
     }
 
     @Override

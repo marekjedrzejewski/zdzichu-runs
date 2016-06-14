@@ -11,7 +11,6 @@ public class AudioUtils {
     private static Sound music = createSound(Constants.GAME_MUSIC);
 
     private static final String PREFERENCES_NAME = "preferences";
-    private static final String MUSIC_ON_PREFERENCE = "music_on";
     private static final String SOUND_ON_PREFERENCE = "sound_on";
 
     private AudioUtils() {
@@ -26,13 +25,13 @@ public class AudioUtils {
     }
 
     public void playMusic() {
-        boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
+        boolean soundOn = getPreferences().getBoolean(SOUND_ON_PREFERENCE, true);
 
         if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
             return;
         }
 
-        if (musicOn) {
+        if (soundOn) {
             music.loop();
         }
     }
@@ -42,13 +41,13 @@ public class AudioUtils {
     }
 
     public void toggleMusic() {
-        boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
+        boolean soundOn = getPreferences().getBoolean(SOUND_ON_PREFERENCE, true);
 
-        if (musicOn) {
-            saveBoolean(MUSIC_ON_PREFERENCE, false);
+        if (soundOn) {
+            saveBoolean(SOUND_ON_PREFERENCE, false);
             stopMusic();
         } else {
-            saveBoolean(MUSIC_ON_PREFERENCE, true);
+            saveBoolean(SOUND_ON_PREFERENCE, true);
             playMusic();
         }
     }
@@ -64,10 +63,6 @@ public class AudioUtils {
         }
     }
 
-    public void toggleSound() {
-        saveBoolean(SOUND_ON_PREFERENCE, !getPreferences().getBoolean(SOUND_ON_PREFERENCE, true));
-    }
-
     private void saveBoolean(String key, boolean value) {
         Preferences preferences = getPreferences();
         preferences.putBoolean(key, value);
@@ -77,11 +72,6 @@ public class AudioUtils {
     public String getSoundRegionName() {
         boolean soundOn = getPreferences().getBoolean(SOUND_ON_PREFERENCE, true);
         return soundOn ? Constants.SOUND_ON_REGION_NAME : Constants.SOUND_OFF_REGION_NAME;
-    }
-
-    public String getMusicRegionName() {
-        boolean musicOn = getPreferences().getBoolean(MUSIC_ON_PREFERENCE, true);
-        return musicOn ? Constants.MUSIC_ON_REGION_NAME : Constants.MUSIC_OFF_REGION_NAME;
     }
 
 }
