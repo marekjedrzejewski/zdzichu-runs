@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public interface Constants {
 
+    String GAME_NAME = "Zdzichu Runs";
+    String ABOUT_TEXT = "Authors:\nMarek Jedrzejewski\nPawel Moniewski\nLukasz Wsol\n\nPowered by LibGDX";
+
     int APP_WIDTH = 800;
     int APP_HEIGHT = 480;
     float WORLD_TO_SCREEN = 32;
@@ -38,6 +41,7 @@ public interface Constants {
     int SPACE_HEIGHT = 20;
     int SPACE_WIDTH = 20;
 
+    String ABOUT_REGION_NAME = "about";
     String BIG_PLAY_REGION_NAME = "play200";
     String BIG_RESTART_REGION_NAME = "restart200";
     String PAUSE_REGION_NAME = "pause60";

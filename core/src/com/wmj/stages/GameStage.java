@@ -15,21 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.wmj.actors.Background;
-import com.wmj.actors.Enemy;
-import com.wmj.actors.Ground;
-import com.wmj.actors.Runner;
-import com.wmj.actors.Score;
-import com.wmj.actors.Tutorial;
-import com.wmj.actors.menu.PauseButton;
-import com.wmj.actors.menu.SoundButton;
-import com.wmj.actors.menu.StartButton;
-import com.wmj.enums.GameState;
-import com.wmj.utils.AudioUtils;
-import com.wmj.utils.BodyUtils;
-import com.wmj.utils.Constants;
-import com.wmj.utils.GameStateManager;
-import com.wmj.utils.WorldUtils;
+import com.wmj.actors.*;
+import com.wmj.actors.menu.*;
+import com.wmj.enums.*;
+import com.wmj.utils.*;
 
 public class GameStage extends Stage implements ContactListener {
 
@@ -52,6 +41,7 @@ public class GameStage extends Stage implements ContactListener {
     private Rectangle screenTopSide;
     private Rectangle screenBottomSide;
 
+    private AboutButton aboutButton;
     private PauseButton pauseButton;
     private SoundButton soundButton;
     private StartButton startButton;
@@ -66,13 +56,17 @@ public class GameStage extends Stage implements ContactListener {
 
         this.world = world;
 
-        setUpWorld();
         setUpCamera();
-        setUpFixedMenu();
+        setUpStageBase();
         setUpMainMenu();
         setUpTouchControlAreas();
         Gdx.input.setInputProcessor(this);
         onGameOver();
+    }
+
+    private void setUpStageBase() {
+        setUpWorld();
+        setUpFixedMenu();
     }
 
     private void setUpFixedMenu() {
@@ -81,7 +75,18 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpMainMenu() {
+        setUpLabel();
         setUpStart();
+        setUpAbout();
+    }
+
+    private void setUpLabel() {
+        Rectangle gameLabelBounds = new Rectangle(
+                0,
+                getCamera().viewportHeight - 2 * Constants.SPACE_HEIGHT,
+                getCamera().viewportWidth,
+                getCamera().viewportHeight / 4);
+        addActor(new Label(gameLabelBounds));
     }
 
     private void setUpStart() {
@@ -92,6 +97,25 @@ public class GameStage extends Stage implements ContactListener {
                 Constants.BIG_BUTTON_HEIGHT);
         startButton = new StartButton(startButtonBounds, new GameStartButtonListener());
         addActor(startButton);
+    }
+
+    private void setUpAbout() {
+        Rectangle aboutButtonBounds = new Rectangle(
+                getCamera().viewportWidth - Constants.BUTTON_WIDTH - Constants.SPACE_WIDTH,
+                getCamera().viewportHeight - 2 * Constants.BUTTON_HEIGHT - 2 * Constants.SPACE_HEIGHT,
+                Constants.BUTTON_WIDTH,
+                Constants.BUTTON_HEIGHT);
+        aboutButton = new AboutButton(aboutButtonBounds, new GameAboutButtonListener());
+        addActor(aboutButton);
+    }
+
+    private void setUpAboutText() {
+        Rectangle gameLabelBounds = new Rectangle(
+                0,
+                getCamera().viewportHeight * 3 / 4 - Constants.SPACE_WIDTH,
+                getCamera().viewportWidth,
+                getCamera().viewportHeight / 2);
+        addActor(new AboutLabel(gameLabelBounds));
     }
 
     private void setUpPause() {
@@ -116,7 +140,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpScore() {
         Rectangle scoreBounds = new Rectangle(
-                getCamera().viewportWidth - Constants.BIG_BUTTON_WIDTH - 2 * Constants.SPACE_WIDTH,
+                getCamera().viewportWidth - Constants.BIG_BUTTON_WIDTH - Constants.SPACE_WIDTH,
                 getCamera().viewportHeight - 2 * Constants.SPACE_HEIGHT,
                 Constants.BIG_BUTTON_WIDTH,
                 Constants.BUTTON_HEIGHT);
@@ -160,10 +184,6 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportWidth,
                 getCamera().viewportHeight);
         addActor(new Tutorial(tutorialBounds, new GamePauseButtonListener()));
-    }
-
-    private void setUpLeftTutorial() {
-
     }
 
     private void setUpCamera() {
@@ -319,7 +339,8 @@ public class GameStage extends Stage implements ContactListener {
                 break;
         }
 
-        if (soundButton.getBounds().contains(x, y)) {
+        if (soundButton.getBounds().contains(x, y)
+                || aboutButton.getBounds().contains(x, y)) {
             touched = true;
         }
 
@@ -371,6 +392,22 @@ public class GameStage extends Stage implements ContactListener {
 
     }
 
+    private class GameAboutButtonListener implements AboutButton.AboutButtonListener {
+
+        @Override
+        public void onAbout() {
+            if (GameStateManager.getInstance().getGameState() == GameState.OVER) {
+                onGameAbout();
+            } else {
+                clear();
+                setUpStageBase();
+                setUpLabel();
+                onGameOver();
+            }
+        }
+
+    }
+
     private class GamePauseButtonListener implements PauseButton.PauseButtonListener {
 
         @Override
@@ -392,6 +429,15 @@ public class GameStage extends Stage implements ContactListener {
             onGameStarted();
         }
 
+    }
+
+    private void onGameAbout() {
+        GameStateManager.getInstance().setGameState(GameState.ABOUT);
+        clear();
+        setUpStageBase();
+        setUpLabel();
+        setUpAboutText();
+        setUpAbout();
     }
 
     private void onGameStarted() {
