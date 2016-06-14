@@ -19,6 +19,7 @@ import com.wmj.actors.Background;
 import com.wmj.actors.Enemy;
 import com.wmj.actors.Ground;
 import com.wmj.actors.Runner;
+import com.wmj.actors.Score;
 import com.wmj.actors.menu.PauseButton;
 import com.wmj.actors.menu.SoundButton;
 import com.wmj.actors.menu.StartButton;
@@ -54,6 +55,8 @@ public class GameStage extends Stage implements ContactListener {
     private SoundButton soundButton;
     private StartButton startButton;
 
+    private Score score;
+
     private Vector3 touchPoint;
 
     public GameStage(World world) {
@@ -73,6 +76,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpFixedMenu() {
         setUpSound();
+        setUpScore();
     }
 
     private void setUpMainMenu() {
@@ -107,6 +111,16 @@ public class GameStage extends Stage implements ContactListener {
                 Constants.BUTTON_HEIGHT);
         soundButton = new SoundButton(soundButtonBounds);
         addActor(soundButton);
+    }
+
+    private void setUpScore() {
+        Rectangle scoreBounds = new Rectangle(
+                getCamera().viewportWidth - Constants.BIG_BUTTON_WIDTH - 2 * Constants.SPACE_WIDTH,
+                getCamera().viewportHeight - 2 * Constants.SPACE_HEIGHT,
+                Constants.BIG_BUTTON_WIDTH,
+                Constants.BUTTON_HEIGHT);
+        score = new Score(scoreBounds);
+        addActor(score);
     }
 
     private void setUpWorld() {
@@ -371,6 +385,7 @@ public class GameStage extends Stage implements ContactListener {
     private void onGameStarted() {
         setUpCharacters();
         setUpPause();
+        score.reset();
         onGameResumed();
     }
 

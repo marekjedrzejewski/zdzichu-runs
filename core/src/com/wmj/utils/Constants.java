@@ -52,6 +52,8 @@ public interface Constants {
     String RUNNER_JUMP_SOUND = "sounds/jump.wav";
     String RUNNER_HIT_SOUND = "sounds/hit.wav";
 
+    String FONT_NAME = "opensans_bold.ttf";
+
     //ENEMY STUFF
     int INCREASE_COUNTER = 5;
     float ENEMY_X = 25f;
