@@ -13,16 +13,20 @@ public enum EnemyType {
 //    RUNNING_WIDE(2f, 1f, Constants.ENEMY_X, Constants.RUNNING_SHORT_ENEMY_Y, Constants.ENEMY_DENSITY,
 //            Constants.RUNNING_WIDE_ENEMY_REGION_NAMES),
 
-    CACTUS_3(1f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+    CACTUS_3(1f, 3f, Constants.ENEMY_X, 2f, Constants.ENEMY_DENSITY,
         Constants.CACTUS_ANIM_3, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
     CACTUS_2(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
-        Constants.CACTUS_ANIM_2, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
+        Constants.CACTUS_ANIM_2, new Vector2(-30f, 0)),
     CACTUS_1(1f, 1f, Constants.ENEMY_X, Constants.ENEMY_Y, Constants.ENEMY_DENSITY,
             Constants.CACTUS_ANIM_1, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
-    MALUCH(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+    MALUCH_1(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
             Constants.MALUCH_ANIM, Constants.DYNAMIC_ENEMY_LINEAR_VELOCITY),
-    JASTRZAB(1f, 1f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
-            Constants.JASTRZAB_ANIM, Constants.SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY);
+    MALUCH_2(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+            Constants.MALUCH_ANIM, new Vector2(-20f, 0)),
+    JASTRZAB_1(1f, 1.5f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
+            Constants.JASTRZAB_ANIM, Constants.SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY),
+    JASTRZAB_2(1f, 1.5f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
+             Constants.JASTRZAB_ANIM, new Vector2(-25f, 0));
 
     private float width;
     private float height;
