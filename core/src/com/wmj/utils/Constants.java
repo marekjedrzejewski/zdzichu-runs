@@ -61,10 +61,10 @@ public interface Constants {
     float ENEMY_DENSITY = RUNNER_DENSITY;
     float ENEMY_Y = 1.2f;
     float ENEMY_Y_BIG = 1.6f;
-    float FLYING_ENEMY_Y = 3.0f;
+    float FLYING_ENEMY_Y = 3.4f;
     Vector2 STATIC_ENEMY_LINEAR_VELOCITY = new Vector2(-9.3f, 0);
-    Vector2 DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-12f, 0);
-    Vector2 SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-18f, 0);
+    Vector2 DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-14f, 0);
+    Vector2 SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY = new Vector2(-20f, 0);
 
     AnimParameters JASTRZAB_ANIM = new AnimParameters("animation_sheets/falcon_sheet_64.png",
             30, 64, 64);
