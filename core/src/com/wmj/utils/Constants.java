@@ -42,6 +42,7 @@ public interface Constants {
     String BIG_RESTART_REGION_NAME = "restart200";
     String PAUSE_REGION_NAME = "pause60";
     String PLAY_REGION_NAME = "play60";
+    String TUTORIAL_REGION_NAME = "tutorial";
 
     String SOUND_ON_REGION_NAME = "sound_on";
     String SOUND_OFF_REGION_NAME = "sound_off";

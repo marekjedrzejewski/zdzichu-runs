@@ -1,6 +1,5 @@
 package com.wmj.actors.menu;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -41,6 +40,10 @@ public abstract class GameButton extends Button {
     protected abstract String getRegionName();
 
     public abstract void touched();
+
+    public void refreshStyle() {
+        loadTextureRegion();
+    }
 
     public Rectangle getBounds() {
         return bounds;

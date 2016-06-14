@@ -3,44 +3,51 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+tutorial
+  rotate: false
+  xy: 1, 327
+  size: 800, 480
+  orig: 800, 480
+  offset: 0, 0
+  index: -1
 play200
   rotate: false
-  xy: 1, 47
+  xy: 1, 125
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 restart200
   rotate: false
-  xy: 203, 47
+  xy: 803, 607
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 pause60
   rotate: false
-  xy: 405, 187
+  xy: 1, 63
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 play60
   rotate: false
-  xy: 405, 125
+  xy: 203, 265
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 405, 63
+  xy: 803, 545
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 405, 1
+  xy: 1, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

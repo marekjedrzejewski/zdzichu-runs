@@ -23,7 +23,7 @@ public class Score extends Actor {
         setWidth(bounds.width);
         setHeight(bounds.height);
         score = 0;
-        multiplier = 5;
+        multiplier = 10;
         loadFont();
     }
 

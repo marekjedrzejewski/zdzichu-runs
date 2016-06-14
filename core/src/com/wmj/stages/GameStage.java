@@ -20,6 +20,7 @@ import com.wmj.actors.Enemy;
 import com.wmj.actors.Ground;
 import com.wmj.actors.Runner;
 import com.wmj.actors.Score;
+import com.wmj.actors.Tutorial;
 import com.wmj.actors.menu.PauseButton;
 import com.wmj.actors.menu.SoundButton;
 import com.wmj.actors.menu.StartButton;
@@ -152,6 +153,19 @@ public class GameStage extends Stage implements ContactListener {
         addActor(runner);
     }
 
+    private void setUpTutorial() {
+        Rectangle tutorialBounds = new Rectangle(
+                0,
+                0,
+                getCamera().viewportWidth,
+                getCamera().viewportHeight);
+        addActor(new Tutorial(tutorialBounds, new GamePauseButtonListener()));
+    }
+
+    private void setUpLeftTutorial() {
+
+    }
+
     private void setUpCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
@@ -171,8 +185,6 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportWidth,
                 getCamera().viewportHeight / 2);
     }
-
-
 
     @Override
     public void act(float delta) {
@@ -392,11 +404,14 @@ public class GameStage extends Stage implements ContactListener {
     private void onGamePaused() {
         GameStateManager.getInstance().setGameState(GameState.PAUSED);
         AudioUtils.getInstance().stopMusic();
+        pauseButton.refreshStyle();
+        setUpTutorial();
     }
 
     private void onGameResumed() {
         GameStateManager.getInstance().setGameState(GameState.RUNNING);
         AudioUtils.getInstance().playMusic();
+        pauseButton.refreshStyle();
     }
 
     private void onGameOver() {
