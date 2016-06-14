@@ -50,14 +50,12 @@ public interface Constants {
 
     String SOUND_ON_REGION_NAME = "sound_on";
     String SOUND_OFF_REGION_NAME = "sound_off";
-    String MUSIC_ON_REGION_NAME = "music_on";
-    String MUSIC_OFF_REGION_NAME = "music_off";
 
     String GAME_MUSIC = "sounds/soundtrack_loop.ogg";
     String RUNNER_JUMP_SOUND = "sounds/jump.wav";
     String RUNNER_HIT_SOUND = "sounds/hit.wav";
 
-    String FONT_NAME = "opensans_bold.ttf";
+    String FONT_NAME = "lato_bold.ttf";
 
     //ENEMY STUFF
     int INCREASE_COUNTER = 5;
