@@ -339,8 +339,13 @@ public class GameStage extends Stage implements ContactListener {
                 break;
         }
 
-        if (soundButton.getBounds().contains(x, y)
-                || aboutButton.getBounds().contains(x, y)) {
+        if (soundButton.getBounds().contains(x, y)) {
+            touched = true;
+        }
+
+        if (aboutButton.getBounds().contains(x, y)
+                && (GameStateManager.getInstance().getGameState() == GameState.ABOUT
+                || GameStateManager.getInstance().getGameState() == GameState.OVER)) {
             touched = true;
         }
 

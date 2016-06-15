@@ -50,6 +50,11 @@ public class Score extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        if (getScore() == 0) {
+            return;
+        }
+
         font.draw(batch, String.valueOf(getScore()), bounds.x, bounds.y, bounds.width, Align.topRight, true);
     }
 
