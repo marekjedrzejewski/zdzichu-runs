@@ -1,7 +1,6 @@
 package com.wmj.stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -15,10 +14,24 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.wmj.actors.*;
-import com.wmj.actors.menu.*;
-import com.wmj.enums.*;
-import com.wmj.utils.*;
+import com.wmj.actors.Background;
+import com.wmj.actors.Enemy;
+import com.wmj.actors.Ground;
+import com.wmj.actors.Label;
+import com.wmj.actors.Runner;
+import com.wmj.actors.Score;
+import com.wmj.actors.Tutorial;
+import com.wmj.actors.menu.AboutButton;
+import com.wmj.actors.menu.AboutLabel;
+import com.wmj.actors.menu.PauseButton;
+import com.wmj.actors.menu.SoundButton;
+import com.wmj.actors.menu.StartButton;
+import com.wmj.enums.GameState;
+import com.wmj.utils.AudioUtils;
+import com.wmj.utils.BodyUtils;
+import com.wmj.utils.Constants;
+import com.wmj.utils.GameStateManager;
+import com.wmj.utils.WorldUtils;
 
 public class GameStage extends Stage implements ContactListener {
 
@@ -38,8 +51,8 @@ public class GameStage extends Stage implements ContactListener {
 
     private OrthographicCamera camera;
 
-    private Rectangle screenTopSide;
-    private Rectangle screenBottomSide;
+    private Rectangle jumpGestureArea;
+    private Rectangle slideGestureArea;
 
     private AboutButton aboutButton;
     private PauseButton pauseButton;
@@ -194,12 +207,12 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setUpTouchControlAreas() {
         touchPoint = new Vector3();
-        screenTopSide = new Rectangle(
+        jumpGestureArea = new Rectangle(
                 0,
                 getCamera().viewportHeight / 2,
                 getCamera().viewportWidth,
                 getCamera().viewportHeight / 2);
-        screenBottomSide = new Rectangle(
+        slideGestureArea = new Rectangle(
                 0,
                 0,
                 getCamera().viewportWidth,
@@ -260,9 +273,9 @@ public class GameStage extends Stage implements ContactListener {
             return super.touchDown(x, y, pointer, button);
         }
 
-        if (topSideTouched(touchPoint.x, touchPoint.y)) {
+        if (jumpGestureAreaTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
-        } else if (bottomSideTouched(touchPoint.x, touchPoint.y)) {
+        } else if (slideGestureAreaTouched(touchPoint.x, touchPoint.y)) {
             runner.slide();
         }
 
@@ -280,50 +293,6 @@ public class GameStage extends Stage implements ContactListener {
         }
 
         return super.touchUp(x, y, pointer, button);
-    }
-
-    @Override
-    public boolean keyDown(int keyCode) {
-        if (keyCode == Input.Keys.SPACE) {
-            switch (GameStateManager.getInstance().getGameState()) {
-                case OVER:
-                    onGameStarted();
-                    break;
-                case RUNNING:
-                    onGamePaused();
-                    break;
-                case PAUSED:
-                    onGameResumed();
-                    break;
-            }
-        }
-
-        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
-            return super.keyDown(keyCode);
-        }
-
-        if (keyCode == Input.Keys.UP) {
-            runner.jump();
-        } else if (keyCode == Input.Keys.DOWN) {
-            runner.slide();
-        }
-
-        return super.keyDown(keyCode);
-    }
-
-    @Override
-    public boolean keyUp(int keyCode) {
-        if (GameStateManager.getInstance().getGameState() != GameState.RUNNING) {
-            return super.keyUp(keyCode);
-        }
-
-        if (keyCode == Input.Keys.DOWN) {
-            if (runner.isSliding()) {
-                runner.stopSlide();
-            }
-        }
-
-        return super.keyUp(keyCode);
     }
 
     private boolean menuControlTouched(float x, float y) {
@@ -352,12 +321,12 @@ public class GameStage extends Stage implements ContactListener {
         return touched;
     }
 
-    private boolean topSideTouched(float x, float y) {
-        return screenTopSide.contains(x, y);
+    private boolean jumpGestureAreaTouched(float x, float y) {
+        return jumpGestureArea.contains(x, y);
     }
 
-    private boolean bottomSideTouched(float x, float y) {
-        return screenBottomSide.contains(x, y);
+    private boolean slideGestureAreaTouched(float x, float y) {
+        return slideGestureArea.contains(x, y);
     }
 
     private void translateScreenToWorldCoordinates(int x, int y) {
