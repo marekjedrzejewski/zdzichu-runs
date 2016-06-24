@@ -71,7 +71,7 @@ public class GameStateManager {
     }
 
     public boolean isNewMaxScore() {
-        return getScore() > 0;//getMaxScore();
+        return getScore() > getMaxScore();
     }
 
     public void updateNewMaxScore() {
