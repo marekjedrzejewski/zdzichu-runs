@@ -60,6 +60,7 @@ public class GameStage extends Stage implements ContactListener {
     private SoundButton soundButton;
     private StartButton startButton;
 
+    private Label label;
     private Score score;
 
     private Vector3 touchPoint;
@@ -100,7 +101,12 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportHeight - 2 * Constants.SPACE_HEIGHT,
                 getCamera().viewportWidth,
                 getCamera().viewportHeight / 4);
-        addActor(new Label(gameLabelBounds));
+
+        if (label == null) {
+            label = new Label(gameLabelBounds);
+        }
+
+        addActor(label);
     }
 
     private void setUpStart() {
@@ -173,8 +179,10 @@ public class GameStage extends Stage implements ContactListener {
     }
 
     private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world));
-        addActor(ground);
+        if (ground == null) {
+            ground = new Ground(WorldUtils.createGround(world));
+            addActor(ground);
+        }
     }
 
     private void setUpCharacters() {
@@ -415,6 +423,8 @@ public class GameStage extends Stage implements ContactListener {
 
         @Override
         public void onAbout() {
+            label.setNormalText();
+
             if (GameStateManager.getInstance().getGameState() == GameState.OVER) {
                 onGameAbout();
             } else {
@@ -484,5 +494,10 @@ public class GameStage extends Stage implements ContactListener {
         GameStateManager.getInstance().increaseRepetitions();
         AudioUtils.getInstance().stopMusic();
         setUpMainMenu();
+
+        if (GameStateManager.getInstance().isNewMaxScore()) {
+            GameStateManager.getInstance().updateNewMaxScore();
+            label.setRecordText();
+        }
     }
 }

@@ -15,9 +15,11 @@ public class Label extends Actor {
 
     private Rectangle bounds;
     private BitmapFont font;
+    private String text;
 
     public Label(Rectangle bounds) {
         this.bounds = bounds;
+        this.text = Constants.GAME_NAME;
         setWidth(bounds.width);
         setHeight(bounds.height);
         loadFont();
@@ -45,7 +47,15 @@ public class Label extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        font.draw(batch, Constants.GAME_NAME, bounds.x, bounds.y, bounds.width, Align.center, true);
+        font.draw(batch, text, bounds.x, bounds.y, bounds.width, Align.center, true);
+    }
+
+    public void setNormalText() {
+        text = Constants.GAME_NAME;
+    }
+
+    public void setRecordText() {
+        text = Constants.RECORD_TEXT;
     }
 
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public interface Constants {
 
     String GAME_NAME = "Zdzichu Runs";
+    String RECORD_TEXT = "New Record!";
     String ABOUT_TEXT = "Authors:\nMarek Jedrzejewski\nPawel Moniewski\nLukasz Wsol\n\nPowered by LibGDX";
 
     int APP_WIDTH = 800;

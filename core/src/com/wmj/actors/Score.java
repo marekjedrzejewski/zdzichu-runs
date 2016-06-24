@@ -13,7 +13,6 @@ import com.wmj.utils.GameStateManager;
 
 public class Score extends Actor {
 
-    private float score;
     private int multiplier;
     private Rectangle bounds;
     private BitmapFont font;
@@ -22,7 +21,6 @@ public class Score extends Actor {
         this.bounds = bounds;
         setWidth(bounds.width);
         setHeight(bounds.height);
-        score = 0;
         multiplier = 10;
         loadFont();
     }
@@ -44,7 +42,7 @@ public class Score extends Actor {
             return;
         }
 
-        score += multiplier * delta;
+        GameStateManager.getInstance().updateScore(multiplier * delta);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class Score extends Actor {
     }
 
     public int getScore() {
-        return (int) Math.floor(score);
+        return (int) Math.floor(GameStateManager.getInstance().getScore());
     }
 
     public void setMultiplier(int multiplier) {
@@ -67,7 +65,7 @@ public class Score extends Actor {
     }
 
     public void reset() {
-        score = 0;
+        GameStateManager.getInstance().setScore(0);
     }
 
 }
