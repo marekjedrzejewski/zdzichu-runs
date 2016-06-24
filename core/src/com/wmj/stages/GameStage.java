@@ -498,6 +498,8 @@ public class GameStage extends Stage implements ContactListener {
         if (GameStateManager.getInstance().isNewMaxScore()) {
             GameStateManager.getInstance().updateNewMaxScore();
             label.setRecordText();
+        } else {
+            label.setNormalText();
         }
     }
 }
