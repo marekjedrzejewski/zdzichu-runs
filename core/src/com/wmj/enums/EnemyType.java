@@ -26,7 +26,17 @@ public enum EnemyType {
     JASTRZAB_1(1f, 1.5f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
             Constants.JASTRZAB_ANIM, Constants.SUPER_DYNAMIC_ENEMY_LINEAR_VELOCITY),
     JASTRZAB_2(1f, 1.5f, Constants.ENEMY_X, Constants.FLYING_ENEMY_Y, Constants.ENEMY_DENSITY,
-             Constants.JASTRZAB_ANIM, new Vector2(-25f, 0));
+             Constants.JASTRZAB_ANIM, new Vector2(-25f, 0)),
+    GARBAGE_1(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+               Constants.GARBAGE_ANIM_1, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
+    GARBAGE_2(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+            Constants.GARBAGE_ANIM_2, Constants.STATIC_ENEMY_LINEAR_VELOCITY);
+//    GARBAGE_3(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+//            Constants.GARBAGE_ANIM_3, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
+//    GARBAGE_4(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+//            Constants.GARBAGE_ANIM_4, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
+//    GARBAGE_5(3f, 2f, Constants.ENEMY_X, Constants.ENEMY_Y_BIG, Constants.ENEMY_DENSITY,
+//            Constants.GARBAGE_ANIM_5, Constants.STATIC_ENEMY_LINEAR_VELOCITY),
 
     private float width;
     private float height;

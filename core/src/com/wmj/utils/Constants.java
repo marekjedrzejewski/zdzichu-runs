@@ -78,5 +78,15 @@ public interface Constants {
             1, 64, 64);
     AnimParameters CACTUS_ANIM_3 = new AnimParameters("static_actors/cactus_tall3.png",
             1, 128, 64);
+    AnimParameters GARBAGE_ANIM_1 = new AnimParameters("static_actors/garbage_container_blue.png",
+            1, 96, 107);
+    AnimParameters GARBAGE_ANIM_2 = new AnimParameters("static_actors/garbage_container_green.png",
+            1, 96, 107);
+    AnimParameters GARBAGE_ANIM_3 = new AnimParameters("static_actors/garbage_container_pink.png",
+            1, 96, 107);
+    AnimParameters GARBAGE_ANIM_4 = new AnimParameters("static_actors/garbage_container_red.png",
+            1, 96, 107);
+    AnimParameters GARBAGE_ANIM_5 = new AnimParameters("static_actors/garbage_container_yellow.png",
+            1, 96, 107);
 
 }
